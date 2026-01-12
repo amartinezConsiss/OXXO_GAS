@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation"
+    app:startDestination="@id/menu">
+
+    <fragment
+        android:id="@+id/menu"
+        android:name="com.example.oxxogas.ui.menu.fragments.MenuFragment"
+        android:label="Menu"
+        tools:layout="@layout/fragment_menu">
+
+        <action
+            android:id="@+id/action_new_sale_fragment"
+            app:destination="@id/new_sale_fragment"
+            app:enterAnim="@anim/right_to_left"
+            app:exitAnim="@anim/left_to_right"
+            app:popEnterAnim="@anim/right_to_left2"
+            app:popExitAnim="@anim/left_to_right2" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/new_sale_fragment"
+        android:name="com.example.oxxogas.ui.newsale.fragment.NewSaleFragment"
+        android:label="New Sale"
+        tools:layout="@layout/fragment_new_sale">
+
+        <action
+            android:id="@+id/action_payment_methods_fragment"
+            app:destination="@id/payment_methods_fragment"
+            app:enterAnim="@anim/right_to_left"
+            app:exitAnim="@anim/left_to_right"
+            app:popEnterAnim="@anim/right_to_left2"
+            app:popExitAnim="@anim/left_to_right2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/payment_methods_fragment"
+        android:name="com.example.oxxogas.ui.paymentmethods.fragments.PaymentMethodsFragment"
+        android:label="Payment Methods"
+        tools:layout="@layout/fragment_payment_methods">
+
+        <action
+            android:id="@+id/action_resume_ticket_fragment"
+            app:destination="@id/resume_ticket_fragment"
+            app:enterAnim="@anim/right_to_left"
+            app:exitAnim="@anim/left_to_right"
+            app:popEnterAnim="@anim/right_to_left2"
+            app:popExitAnim="@anim/left_to_right2" />
+
+        <action
+            android:id="@+id/action_mixed_payment_fragment"
+            app:destination="@id/mixed_payment_fragment"
+            app:enterAnim="@anim/right_to_left"
+            app:exitAnim="@anim/left_to_right"
+            app:popEnterAnim="@anim/right_to_left2"
+            app:popExitAnim="@anim/left_to_right2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mixed_payment_fragment"
+        android:name="com.example.oxxogas.ui.paymentmethods.fragments.MixedPaymentMethodFragment"
+        android:label="Resume Ticket"
+        tools:layout="@layout/fragment_mixed_payment_method">
+
+        <action
+            android:id="@+id/action_mixed_resume_ticket_fragment"
+            app:destination="@id/resume_ticket_fragment"
+            app:enterAnim="@anim/right_to_left"
+            app:exitAnim="@anim/left_to_right"
+            app:popEnterAnim="@anim/right_to_left2"
+            app:popExitAnim="@anim/left_to_right2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resume_ticket_fragment"
+        android:name="com.example.oxxogas.ui.resumeticket.fragment.ResumeTicketFragment"
+        android:label="Resume Ticket"
+        tools:layout="@layout/fragment_resume_ticket">
+
+        <action
+            android:id="@+id/action_home"
+            app:destination="@id/menu"
+            app:enterAnim="@anim/right_to_left"
+            app:exitAnim="@anim/left_to_right"
+            app:popEnterAnim="@anim/right_to_left2"
+            app:popExitAnim="@anim/left_to_right2"
+            app:popUpTo="@id/home_navigation"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+</navigation>

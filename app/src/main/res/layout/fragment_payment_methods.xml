@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/toolbar_payment_methods"
+            layout="@layout/layout_toolbar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_payment_methods">
+
+            <ImageView
+                android:id="@+id/iv_pump"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/ic_pump"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_pump"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/oxxo_red"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/iv_pump"
+                app:layout_constraintEnd_toStartOf="@id/iv_logo_spin"
+                app:layout_constraintStart_toEndOf="@id/iv_pump"
+                app:layout_constraintTop_toTopOf="@id/iv_pump"
+                tools:text="Bomba 3" />
+
+            <ImageView
+                android:id="@+id/iv_logo_spin"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/logo_spin_premia_blue_border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_label_description"
+            style="@style/BlackBoldText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/description"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_top" />
+
+        <TextView
+            android:id="@+id/tv_label_quantity"
+            style="@style/BlackBoldText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="@string/quantity"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_label_price"
+            app:layout_constraintTop_toTopOf="@id/tv_label_description" />
+
+        <TextView
+            android:id="@+id/tv_label_price"
+            style="@style/BlackBoldText"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/price"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_price"
+            app:layout_constraintTop_toTopOf="@id/tv_label_description" />
+
+        <TextView
+            android:id="@+id/tv_label_total"
+            style="@style/BlackBoldText"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="@string/total"
+            android:textAlignment="textEnd"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_label_description" />
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"
+            app:layout_constraintTop_toBottomOf="@id/tv_label_description" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textAllCaps="true"
+            app:layout_constraintStart_toStartOf="@id/tv_label_description"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            tools:text="MAGNA" />
+
+        <TextView
+            android:id="@+id/tv_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/tv_label_quantity"
+            app:layout_constraintStart_toStartOf="@id/tv_label_quantity"
+            app:layout_constraintTop_toTopOf="@id/tv_description"
+            tools:text="10" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_total"
+            app:layout_constraintTop_toTopOf="@id/tv_description"
+            tools:text="$27.14" />
+
+        <TextView
+            android:id="@+id/tv_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_label_total"
+            app:layout_constraintTop_toTopOf="@id/tv_description"
+            tools:text="$271.40" />
+
+        <TextView
+            style="@style/BlackBoldText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/payment_method"
+            android:textAllCaps="true"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/rv_payment_methods" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_payment_methods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/btn_end_payment"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_payment_method" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_end_payment"
+            style="@style/GrayButton"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/finish_sell"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

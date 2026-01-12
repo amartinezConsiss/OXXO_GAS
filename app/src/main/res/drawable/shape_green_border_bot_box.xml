@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Shape base con borde completo -->
+    <item>
+        <shape android:shape="rectangle">
+
+            <solid
+                android:color="@color/green"/>
+
+            <corners
+                android:bottomLeftRadius="10dp"
+                android:bottomRightRadius="10dp"/>
+        </shape>
+    </item>
+
+    <!-- Shape interno que tapa el borde inferior -->
+    <item
+        android:bottom="2dp"
+        android:left="2dp"
+        android:right="2dp">
+
+        <shape android:shape="rectangle">
+
+            <solid
+                android:color="#F2FAF3"/>
+
+            <corners
+                android:bottomLeftRadius="8dp"
+                android:bottomRightRadius="8dp"/>
+        </shape>
+    </item>
+
+</layer-list>
