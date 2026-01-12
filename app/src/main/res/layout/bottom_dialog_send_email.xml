@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/white_box"
+            android:background="@drawable/box_white"
             android:text="@string/enter_email"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@id/email_container"

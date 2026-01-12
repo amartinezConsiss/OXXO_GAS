@@ -16,4 +16,8 @@
     <color name="orange">#FF8800</color>
     <color name="light_yellow">#F4DA93</color>
     <color name="transparent">#00000000</color>
+    <!--New UI-->
+    <color name="action">#FF0105</color>
+    <color name="surface_light">#F4F4F4</color>
+    <color name="stroke">#999999</color>
 </resources>

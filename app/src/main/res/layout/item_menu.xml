@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/iv_menu"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="178dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="10dp"
     android:layout_marginEnd="5dp"
     android:layout_marginStart="5dp"
     android:clickable="true"
-    android:src="@drawable/ic_menu_sales"
     android:focusable="true"
-    android:background="?attr/selectableItemBackground"/>
+    android:background="@drawable/box_white">
+
+    <ImageView
+        android:id="@+id/iv_menu"
+        app:layout_constraintBottom_toTopOf="@id/tv_menu_name"
+        android:layout_width="wrap_content"
+        android:src="@drawable/img_gif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_menu_name"
+        android:layout_width="wrap_content"
+        tools:text="Promociones Nuevas"
+        style="@style/BlackMediumText"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,8 +31,8 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>() {
     }
 
     private fun loadDummyInformation(){
-        binding.tvCumulativeSale.text = "808.99"
-        binding.tvCashAmount.text = "6,900.64"
+        /*binding.tvCumulativeSale.text = "808.99"
+        binding.tvCashAmount.text = "6,900.64"*/
     }
 
 }
