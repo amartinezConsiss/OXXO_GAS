@@ -3,6 +3,7 @@ package com.example.oxxogas.ui.newsale.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.oxxogas.R
@@ -16,13 +17,17 @@ import com.example.oxxogas.ui.newsale.adapters.NewSalePetrolPumpAdapter
 import com.example.oxxogas.ui.newsale.dialogs.AskSpinBottomSheetDialog
 import com.example.oxxogas.ui.newsale.dialogs.ErrorConnectionBottomSheetDialog
 import com.example.oxxogas.ui.newsale.dialogs.SpinPremiaBottomSheetDialog
+import com.example.oxxogas.ui.newsale.viewmodels.NewSaleViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class NewSaleFragment :
     BaseFragment<FragmentNewSaleBinding>() {
 
     private lateinit var adapter: NewSalePetrolPumpAdapter
+    private val viewModel by viewModels<NewSaleViewModel>()
 
     override fun initBinding(): FragmentNewSaleBinding =
         FragmentNewSaleBinding.inflate(layoutInflater)
@@ -31,19 +36,15 @@ class NewSaleFragment :
 
     override fun initView(view: View, savedState: Bundle?) {
         parentActivity = activity as? HomeActivity
-        parentActivity?.setupToolbar(binding.toolbarNewSale, getString(R.string.back), true)
+        parentActivity?.setupToolbar(binding.toolbarNewSale, getString(R.string.new_sale), true)
         initComponents()
     }
 
     private fun initComponents() {
         adapter =
-            NewSalePetrolPumpAdapter(getDummyInformation()) { pompId, status ->
-                if (status) {
-                    if (pompId == 6) {
-                        showErrorConnection()
-                    } else {
-                        showAskSpinPremiaDialog(pompId)
-                    }
+            NewSalePetrolPumpAdapter(viewModel.getPumpsData(requireContext())) { pompId, status ->
+                if (status == 1) {
+                    showAskSpinPremiaDialog(pompId)
                 } else {
                     showDisabledPomp()
                 }
@@ -152,14 +153,5 @@ class NewSaleFragment :
         }
     }
 
-    private fun getDummyInformation(): List<PetrolPumpsList> {
-        return listOf(
-            PetrolPumpsList(1, true),
-            PetrolPumpsList(2, false),
-            PetrolPumpsList(3, true),
-            PetrolPumpsList(4, true),
-            PetrolPumpsList(5, false),
-            PetrolPumpsList(6, true),
-        )
-    }
+
 }

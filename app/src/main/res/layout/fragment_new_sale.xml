@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/surface_light"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
         <include
             android:id="@+id/toolbar_new_sale"
@@ -19,10 +21,9 @@
             style="@style/BlackBoldText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="5dp"
-            android:text="@string/new_sale"
-            android:textAllCaps="true"
+            android:layout_marginTop="30dp"
+            android:text="@string/choose_pump"
             android:textSize="20sp"
             app:layout_constraintTop_toBottomOf="@id/toolbar_new_sale" />
 
@@ -30,9 +31,9 @@
             android:id="@+id/rv_petrol_pumps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/tile_new_Sale"
-            android:layout_marginTop="15dp"
             app:spanCount="2"
             tools:itemCount="6"
             tools:listitem="@layout/item_new_sale_petrol_pump" />

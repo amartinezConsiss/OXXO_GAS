@@ -6,33 +6,42 @@
     android:layout_width="match_parent"
     android:layout_height="175dp"
     android:layout_margin="5dp"
-    android:background="@drawable/yellow_box"
-    android:padding="50dp">
+    android:background="@drawable/box_white">
+
+    <ImageView
+        android:id="@+id/iv_pump"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/img_gas_blue"
+        app:layout_constraintBottom_toTopOf="@id/pump_title"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView
         android:id="@+id/pump_title"
-        style="@style/WhiteBoldText"
+        style="@style/BlackBoldText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pump"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@id/pump_id"
+        android:text="@string/pum_id"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/pump_status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_pump"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/pump_id"
-        style="@style/WhiteBoldText"
+        android:id="@+id/pump_status"
+        style="@style/BlackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pump_title"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="1" />
+        tools:text="Disponible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

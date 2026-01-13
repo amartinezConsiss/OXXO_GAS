@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">OxxoGas</string>
     <string name="current_cash">Efectivo Actual</string>
-    <string name="mxn">MXN</string>
+    <string name="mxn">%s MXN</string>
     <string name="cumulative_sale">Venta acumulada</string>
-    <string name="lts">LTS</string>
+    <string name="lts">%s LTS</string>
     <string name="back">Regresar</string>
     <string name="new_sale">Nueva Venta</string>
+    <string name="choose_pump">Selecciona la bomba</string>
+    <string name="available">Disponible</string>
+    <string name="error">Error</string>
+    <string name="closed">Cerrada</string>
+    <string name="in_use">En uso</string>
     <string name="mixed_payment">Pago mixto</string>
     <string name="pump">BOMBA</string>
     <string name="notice">Aviso</string>

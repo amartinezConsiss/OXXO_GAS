@@ -10,7 +10,7 @@ import com.example.oxxogas.ui.main.utils.setSafeOnClickListener
 
 class NewSalePetrolPumpAdapter(
     private val petrolPumpList: List<PetrolPumpsList>,
-    private val listener: (Int, Boolean) -> Unit
+    private val listener: (Int, Int) -> Unit
 ) : RecyclerView.Adapter<NewSalePetrolPumpAdapter.NewSalePatrolPumpViewHolder>() {
 
 
@@ -30,18 +30,35 @@ class NewSalePetrolPumpAdapter(
     inner class NewSalePatrolPumpViewHolder(private val itemBinding: ItemNewSalePetrolPumpBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(petrolPump: PetrolPumpsList) {
-            itemBinding.pumpId.text = petrolPump.petrolPumpId.toString()
+            val context = itemBinding.root.context
+            itemBinding.pumpStatus.text = petrolPump.petrolPumpNameStatus
+            itemBinding.pumpTitle.text = context.getString(R.string.pum_id, petrolPump.petrolPumpId.toString())
 
-            if (petrolPump.petrolPumpStatus) {
-                itemBinding.pump.setBackgroundResource(R.drawable.yellow_box)
-            } else {
-                itemBinding.pump.setBackgroundResource(R.drawable.gray_box)
+            when (petrolPump.petrolPumpStatus) {
+                1 -> {
+                    itemBinding.ivPump.setImageResource(R.drawable.img_gas_blue)
+                }
+                2 -> {
+                    itemBinding.ivPump.setImageResource(R.drawable.img_bad_alert)
+                    itemBinding.pump.setBackgroundResource(R.drawable.box_red_stroke)
+                    itemBinding.pumpStatus.setTextColor(context.getColor(R.color.white))
+                    itemBinding.pumpTitle.setTextColor(context.getColor(R.color.white))
+                }
+
+                3 -> {
+                    itemBinding.ivPump.setImageResource(R.drawable.img_gray_close)
+                    itemBinding.pump.setBackgroundResource(R.drawable.box_gray_30)
+                    itemBinding.pumpStatus.setTextColor(context.getColor(R.color.stroke))
+                    itemBinding.pumpTitle.setTextColor(context.getColor(R.color.stroke))
+                }
+
+                4 -> {
+                    itemBinding.ivPump.setImageResource(R.drawable.img_gas_blue)
+                    itemBinding.pump.setBackgroundResource(R.drawable.box_brand_yellow)
+                }
             }
 
             itemBinding.root.setSafeOnClickListener {
-                if (petrolPump.petrolPumpStatus) {
-                    it.setBackgroundResource(R.drawable.blue_box)
-                }
                 listener(petrolPump.petrolPumpId, petrolPump.petrolPumpStatus)
             }
         }
