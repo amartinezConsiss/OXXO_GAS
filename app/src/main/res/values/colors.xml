@@ -23,4 +23,7 @@
     <color name="gray_30">#DEDEDE</color>
     <color name="red_stroke">#DE2E31</color>
     <color name="brand_yellow">#FBBA07</color>
+    <color name="gray_400">#505050</color>
+    <color name="spin_color">#00B7C6</color>
+    <color name="gray_eb">#EBECEC</color>
 </resources>

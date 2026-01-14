@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_main_conteiner"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,74 +17,78 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/top_container_method_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/blue_box"
-        app:layout_constraintTop_toBottomOf="@id/dragHandle">
-
-        <ImageView
-            android:id="@+id/iv_bullet_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_card"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/card"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_bullet_settings"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <ImageView
-        android:id="@+id/iv_action_pay_card"
+        android:id="@+id/iv_payment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:src="@drawable/ic_action_pay_card"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/icon_credit_card"
+        app:layout_constraintBottom_toBottomOf="@id/title_card_payment"
+        app:layout_constraintEnd_toStartOf="@id/title_card_payment"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_container_method_card" />
-
-    <ImageView
-        android:id="@+id/iv_pay_card"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_pay_card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_action_pay_card" />
+        app:layout_constraintTop_toTopOf="@id/title_card_payment"
+        app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/tv_waiting_data"
+        android:id="@+id/title_card_payment"
+        style="@style/BlackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/card_instructions"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/cash_payment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_payment"
+        app:layout_constraintTop_toBottomOf="@id/dragHandle" />
+
+    <TextView
+        android:id="@+id/tv_label_amount_to_pay"
+        style="@style/BlackText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/amount_to_pay"
         android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/title_card_payment" />
+
+    <TextView
+        android:id="@+id/tv_amount_to_pay"
+        style="@style/TittleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_amount_to_pay"
+        tools:text="$271.40" />
+
+    <ImageView
+        android:id="@+id/iv_card_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/card_pay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_pay_card" />
+        app:layout_constraintTop_toBottomOf="@id/tv_amount_to_pay" />
+
+    <TextView
+        android:id="@+id/tv_instructions_card"
+        style="@style/BlackText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/card_instructions"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/iv_card_pay" />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_cancel_card_payment"
-        style="@style/RedButton"
+        style="@style/BorderRedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
         android:text="@string/cancel"
-        app:layout_constraintTop_toBottomOf="@id/tv_waiting_data" />
+        app:layout_constraintTop_toBottomOf="@id/tv_instructions_card" />
 </androidx.constraintlayout.widget.ConstraintLayout>

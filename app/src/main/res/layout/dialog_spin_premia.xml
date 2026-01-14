@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:background="@drawable/border_blue"
             android:padding="10dp"
             app:layout_constraintTop_toBottomOf="@id/dragHandle">
 
@@ -37,17 +36,22 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_card_bulleted_settings"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_spin_tittle"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:tint="@color/black" />
 
             <TextView
+                android:id="@+id/tv_spin_tittle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/spin_premia2"
-                android:textColor="@color/blue"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_bullet_settings"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -153,8 +157,8 @@
             android:alpha="0"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:inputType="textNoSuggestions"
             android:importantForAutofill="no"
+            android:inputType="textNoSuggestions"
             android:singleLine="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

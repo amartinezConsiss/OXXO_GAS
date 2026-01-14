@@ -135,7 +135,7 @@ class PaymentMethodsFragment : BaseFragment<FragmentPaymentMethodsBinding>() {
     }
 
     private fun cardPaymentMethod() {
-        val cardPaymentDialog = CardPaymentBottomSheetDialog(isSuccessPayment)
+        val cardPaymentDialog = CardPaymentBottomSheetDialog(0.0)
         isSuccessPayment = true
         cardPaymentDialog.onPayCardSuccessCallback = {
             viewLifecycleOwner.lifecycleScope.launch {

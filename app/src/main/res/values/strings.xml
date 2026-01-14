@@ -6,12 +6,14 @@
     <string name="lts">%s LTS</string>
     <string name="back">Regresar</string>
     <string name="new_sale">Nueva Venta</string>
+    <string name="checkout">Realizar cobro</string>
     <string name="choose_pump">Selecciona la bomba</string>
     <string name="available">Disponible</string>
     <string name="error">Error</string>
     <string name="closed">Cerrada</string>
     <string name="in_use">En uso</string>
     <string name="mixed_payment">Pago mixto</string>
+    <string name="mixed">Mixto</string>
     <string name="pump">BOMBA</string>
     <string name="notice">Aviso</string>
     <string name="disabled_pump">Bomba desactivada.</string>
@@ -55,6 +57,7 @@
     <string name="amount">Monto</string>
     <string name="amount_due">Falta por pagar</string>
     <string name="outstanding_payment">Pendiente por pagar</string>
+    <string name="outstanding_payment_amount">Pendiente por pagar %s</string>
     <string name="total_amount">Total a pagar</string>
     <string name="cash_payment">Pago en efectivo</string>
     <string name="cash_receipt">Recibo en efectivo</string>
@@ -102,4 +105,7 @@
     <string name="mechanic_spin_premia">=== MECANICA Spin Premia ===</string>
     <string name="more_information_spin_premia">Con OXXO GAS y Spin Premia\n <b>Recibes Más</b>\n Consulta los beneficios\n <b>vigentes</b>\n en la App Spin Premia</string>
     <string name="thanks_for_thrust">Gracias por la confianza</string>
+    <string name="cant_price">CANT. %sLTS | 1LT %s</string>
+    <string name="amount_to_pay">Monto a pagar</string>
+    <string name="accept">Aceptar</string>
 </resources>

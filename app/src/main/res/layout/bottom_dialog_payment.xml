@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottomsheet"
+        android:padding="20dp">
+
+        <View
+            android:id="@+id/dragHandle"
+            android:layout_width="150dp"
+            android:layout_height="4dp"
+            android:background="@drawable/bg_drag_handle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_cash"
+            app:layout_constraintBottom_toBottomOf="@id/title_payment"
+            app:layout_constraintEnd_toStartOf="@id/title_payment"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title_payment"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/title_payment"
+            style="@style/BlackText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/cash_payment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_payment"
+            app:layout_constraintTop_toBottomOf="@id/dragHandle" />
+
+        <ImageView
+            android:id="@+id/iv_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_alert"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_payment" />
+
+
+        <TextView
+            android:id="@+id/tv_label_title_payment"
+            style="@style/BlackBoldText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/outstanding_payment"
+            android:textColor="@color/dark_blue"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/iv_alert"
+            app:layout_constraintTop_toBottomOf="@id/title_payment" />
+
+        <TextView
+            android:id="@+id/tv_label_amount"
+            style="@style/BlackBoldText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/dark_blue"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_payment"
+            tools:text="$241.40" />
+
+        <TextView
+            android:id="@+id/tv_label_payment"
+            style="@style/BlackText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/amount_to_pay"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_label_amount" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/eil_enter_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:endIconDrawable="@drawable/ic_close"
+            app:endIconMode="clear_text"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_label_payment">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_enter_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_edit_text"
+                android:gravity="center"
+                android:hint="@string/zero_amount"
+                android:inputType="numberDecimal"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_error_amount"
+            style="@style/BlackText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="El monto no puede ser menor al\n pendiente por pagar."
+            android:textAlignment="center"
+            android:textColor="@color/red_stroke"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eil_enter_amount" />
+
+        <TextView
+            android:id="@+id/tv_label_exchange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/exchange"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_error_amount" />
+
+        <TextView
+            android:id="@+id/tv_exchange"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/zero_amount"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_label_exchange"
+            app:layout_constraintTop_toBottomOf="@id/tv_error_amount" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel_payment"
+            style="@style/WhiteButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:enabled="false"
+            android:text="@string/cancel"
+            app:layout_constraintEnd_toStartOf="@id/btn_apply_amount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_exchange" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_apply_amount"
+            style="@style/GreenButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/accept"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_cancel_payment"
+            app:layout_constraintTop_toBottomOf="@id/tv_exchange" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

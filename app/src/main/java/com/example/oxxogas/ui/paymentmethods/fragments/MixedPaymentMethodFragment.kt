@@ -102,7 +102,7 @@ class MixedPaymentMethodFragment : BaseFragment<FragmentMixedPaymentMethodBindin
     }
 
     private fun showCardPayment(amountCard: BigDecimal) {
-        val cardPaymentBottomSheetDialog = CardPaymentBottomSheetDialog(true)
+        val cardPaymentBottomSheetDialog = CardPaymentBottomSheetDialog(totalAmount.toDouble())
         cardPaymentBottomSheetDialog.onPayCardSuccessCallback = {
             lifecycleScope.launch {
                 delay(2000)

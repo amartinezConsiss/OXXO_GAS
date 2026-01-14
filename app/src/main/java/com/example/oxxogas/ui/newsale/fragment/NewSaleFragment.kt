@@ -44,7 +44,7 @@ class NewSaleFragment :
         adapter =
             NewSalePetrolPumpAdapter(viewModel.getPumpsData(requireContext())) { pompId, status ->
                 if (status == 1) {
-                    showAskSpinPremiaDialog(pompId)
+                    goToPaymentFragment(pompId)
                 } else {
                     showDisabledPomp()
                 }
@@ -150,6 +150,13 @@ class NewSaleFragment :
             putInt(Constants.PUMP_ID_KEY, pumpId)
             putBoolean(Constants.HAS_SPIN_PREMIA, hasSpinPremia)
             findNavController().navigate(R.id.action_payment_methods_fragment, this)
+        }
+    }
+
+    private fun goToPaymentFragment(pumpId: Int){
+        Bundle().apply {
+            putInt(Constants.PUMP_ID_KEY, pumpId)
+            findNavController().navigate(R.id.action_payment_fragment, this)
         }
     }
 

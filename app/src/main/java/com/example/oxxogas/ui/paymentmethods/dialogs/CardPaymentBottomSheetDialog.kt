@@ -1,15 +1,24 @@
 package com.example.oxxogas.ui.paymentmethods.dialogs
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.vectordrawable.graphics.drawable.Animatable2Compat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.oxxogas.R
 import com.example.oxxogas.databinding.BottomDialogCardPaymentBinding
 import com.example.oxxogas.ui.main.dialogs.BaseBottomSheetDialog
+import com.example.oxxogas.ui.main.utils.setCurrencyFormat
 import com.example.oxxogas.ui.main.utils.setSafeOnClickListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
-class CardPaymentBottomSheetDialog(private val isSuccess: Boolean) :
+class CardPaymentBottomSheetDialog(private val totalAmount: Double) :
     BaseBottomSheetDialog<BottomDialogCardPaymentBinding>() {
 
     var onPayCardSuccessCallback: (() -> Unit)? = null
@@ -35,35 +44,62 @@ class CardPaymentBottomSheetDialog(private val isSuccess: Boolean) :
         binding.btnCancelCardPayment.setSafeOnClickListener {
             this.dismiss()
         }
+        binding.tvAmountToPay.text = setCurrencyFormat(totalAmount)
 
-        binding.ivPayCard.setSafeOnClickListener {
+        binding.root.setSafeOnClickListener {
             it.isEnabled = false
-            if (isSuccess) {
-                customResultPaymentView()
-                binding.ivPayCard.setImageResource(R.drawable.ic_check_circle)
-                binding.tvWaitingData.text = getString(R.string.transaction_completed)
-                onPayCardSuccessCallback?.invoke()
-                binding.btnCancelCardPayment.isEnabled = false
-                binding.btnCancelCardPayment.setBackgroundResource(R.drawable.gray_btn)
-            } else {
-                customResultPaymentView()
-                binding.ivPayCard.setImageResource(R.drawable.ic_close_circle)
-                binding.tvWaitingData.text = getString(R.string.transaction_rejected)
-                binding.btnCancelCardPayment.text = getString(R.string.choose_payment_method)
-            }
+            loadSuccessAnimation()
+
+            binding.tvAmountToPay.visibility = View.GONE
+            binding.btnCancelCardPayment.visibility = View.INVISIBLE
+            binding.tvLabelAmountToPay.visibility = View.GONE
+            binding.tvInstructionsCard.text = "Cargo a tarjeta realizado\n correctamente"
+            customResultPaymentView()
         }
     }
 
+    private fun loadSuccessAnimation() {
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.check)
+            .listener(object : RequestListener<GifDrawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<GifDrawable>,
+                    isFirstResource: Boolean
+                ) = false
+
+                override fun onResourceReady(
+                    resource: GifDrawable,
+                    model: Any,
+                    target: Target<GifDrawable>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    resource.setLoopCount(2)
+                    resource.registerAnimationCallback(
+                        object : Animatable2Compat.AnimationCallback() {
+                            override fun onAnimationEnd(drawable: Drawable?) {
+                                onPayCardSuccessCallback?.invoke()
+                            }
+                        }
+                    )
+                    return false
+                }
+
+            })
+            .into(binding.ivCardPay)
+    }
+
     private fun customResultPaymentView() {
-        val paramsIvTop = binding.ivPayCard.layoutParams as ViewGroup.MarginLayoutParams
+        val paramsIvTop = binding.ivCardPay.layoutParams as ViewGroup.MarginLayoutParams
         val paramsBtnTop = binding.btnCancelCardPayment.layoutParams as ViewGroup.MarginLayoutParams
         paramsIvTop.topMargin = resources.getDimensionPixelSize(R.dimen.margin_100)
         paramsBtnTop.topMargin = resources.getDimensionPixelSize(R.dimen.margin_100)
 
-        binding.ivPayCard.layoutParams = paramsIvTop
-        binding.btnCancelCardPayment.layoutParams = paramsBtnTop
-
-        binding.ivActionPayCard.visibility = View.GONE
+        binding.ivCardPay.layoutParams = paramsIvTop
+        //  binding.btnCancelCardPayment.layoutParams = paramsBtnTop
     }
 
 }
