@@ -3,633 +3,694 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/surface_light"
+    android:padding="10dp">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.cardview.widget.CardView
+        android:id="@+id/top_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toTopOf="@id/finish_container"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/iv_ticket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_ticket"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/SubTittleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/digital_ticket"
+                android:textAllCaps="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_ticket"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/foot_container"
+        app:layout_constraintTop_toBottomOf="@id/top_container">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_container"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/box_white">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/top_container"
+                android:id="@+id/ticket_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/blue_box"
                 android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/ic_ticket"
+                    android:id="@+id/iv_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:src="@drawable/ic_ticket"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/top_container" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="@string/digital_ticket"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/ic_ticket"
-                    app:layout_constraintTop_toTopOf="@id/top_container" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <ImageView
-                android:id="@+id/iv_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_logo_large_oxxo_gas"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/top_container" />
-
-            <TextView
-                android:id="@+id/tv_name_station"
-                style="@style/BlackBoldText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@id/iv_logo"
-                tools:text="ESTACIÓN 15 DE MAYO MTY" />
-
-            <TextView
-                android:id="@+id/address_station_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/tv_name_station"
-                tools:text="Dirección: AVENIDA VENUSTIANO CARRANZA SUR 489, MONTERREY, NUEVO LEON" />
-
-            <TextView
-                android:id="@+id/label_pl"
-                style="@style/BlackBoldText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/pl_information"
-                android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@id/address_station_name" />
-
-            <TextView
-                android:id="@+id/colab_name"
-                style="@style/BlackBoldText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@id/label_pl"
-                tools:text="Lo atendió: MIGUEL ANGEL GRACIA ALVARADO" />
-
-            <View
-                android:id="@+id/view_separator_ticket"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/dotted_line"
-                app:layout_constraintTop_toBottomOf="@id/colab_name" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/date_information_resume"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/view_separator_ticket">
-
-                <TextView
-                    android:id="@+id/tv_date_ticket"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Fecha: DIC 29 25" />
-
-                <TextView
-                    android:id="@+id/tv_time_ticket"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toEndOf="@id/tv_date_ticket"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Hora: 14:11:14" />
-
-                <TextView
-                    android:id="@+id/tv_folio_ticket"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_date_ticket"
-                    tools:text="Folio: 395656090" />
-
-                <TextView
-                    android:id="@+id/tv_pump_ticket"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toEndOf="@id/tv_folio_ticket"
-                    app:layout_constraintTop_toBottomOf="@id/tv_time_ticket"
-                    tools:text="Bomba: 4" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/dotted_line"
-                app:layout_constraintTop_toBottomOf="@id/date_information_resume" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/amount_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/date_information_resume">
-
-                <TextView
-                    android:id="@+id/tv_label_product"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/product"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toStartOf="@id/tv_label_quantity"
+                    android:src="@drawable/ic_logo_large_oxxo_gas"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_label_quantity"
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_name_station"
+                    style="@style/BlackBoldText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/quantity_label"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toStartOf="@id/tv_label_price"
-                    app:layout_constraintStart_toEndOf="@id/tv_label_product"
-                    app:layout_constraintTop_toTopOf="@id/tv_label_product" />
+                    android:layout_marginTop="15dp"
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toBottomOf="@id/iv_logo"
+                    tools:text="ESTACIÓN 15 DE MAYO MTY" />
 
                 <TextView
-                    android:id="@+id/tv_label_price"
-                    android:layout_width="0dp"
+                    android:id="@+id/address_station_name"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/price_un"
                     android:textColor="@color/black"
-                    app:layout_constraintEnd_toStartOf="@id/tv_label_amount"
-                    app:layout_constraintStart_toEndOf="@id/tv_label_quantity"
-                    app:layout_constraintTop_toTopOf="@id/tv_label_product" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_name_station"
+                    tools:text="Dirección: AVENIDA VENUSTIANO CARRANZA SUR 489, MONTERREY, NUEVO LEON" />
 
                 <TextView
-                    android:id="@+id/tv_label_amount"
-                    android:layout_width="0dp"
+                    android:id="@+id/label_pl"
+                    style="@style/BlackBoldText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/import_label"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_label_price"
-                    app:layout_constraintTop_toTopOf="@id/tv_label_product" />
+                    android:layout_marginTop="20dp"
+                    android:text="@string/pl_information"
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toBottomOf="@id/address_station_name" />
 
                 <TextView
-                    android:id="@+id/tv_product"
-                    android:layout_width="0dp"
+                    android:id="@+id/colab_name"
+                    style="@style/BlackBoldText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toStartOf="@id/tv_label_quantity"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_label_amount"
-                    tools:text="PREMIUM" />
-
-                <TextView
-                    android:id="@+id/tv_quantity"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toStartOf="@id/tv_label_price"
-                    app:layout_constraintStart_toEndOf="@id/tv_product"
-                    app:layout_constraintTop_toTopOf="@id/tv_product"
-                    tools:text="7.249" />
-
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toStartOf="@id/tv_amount"
-                    app:layout_constraintStart_toEndOf="@id/tv_quantity"
-                    app:layout_constraintTop_toTopOf="@id/tv_product"
-                    tools:text="$27.59" />
-
-                <TextView
-                    android:id="@+id/tv_amount"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_price"
-                    app:layout_constraintTop_toTopOf="@id/tv_product"
-                    tools:text="$200.00" />
+                    android:textAlignment="center"
+                    app:layout_constraintTop_toBottomOf="@id/label_pl"
+                    tools:text="Lo atendió: MIGUEL ANGEL GRACIA ALVARADO" />
 
                 <View
-                    android:id="@+id/view_separator_total"
+                    android:id="@+id/view_separator_ticket"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginVertical="8dp"
                     android:background="@drawable/dotted_line"
-                    app:layout_constraintTop_toBottomOf="@id/tv_amount" />
+                    app:layout_constraintTop_toBottomOf="@id/colab_name" />
 
-                <TextView
-                    android:id="@+id/tv_label_total"
-                    android:layout_width="0dp"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/date_information_resume"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/view_separator_ticket">
+
+                    <TextView
+                        android:id="@+id/tv_date_ticket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Fecha: DIC 29 25" />
+
+                    <TextView
+                        android:id="@+id/tv_time_ticket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toEndOf="@id/tv_date_ticket"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Hora: 14:11:14" />
+
+                    <TextView
+                        android:id="@+id/tv_folio_ticket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_date_ticket"
+                        tools:text="Folio: 395656090" />
+
+                    <TextView
+                        android:id="@+id/tv_pump_ticket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toEndOf="@id/tv_folio_ticket"
+                        app:layout_constraintTop_toBottomOf="@id/tv_time_ticket"
+                        tools:text="Bomba: 4" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="@drawable/dotted_line"
+                    app:layout_constraintTop_toBottomOf="@id/date_information_resume" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/amount_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/date_information_resume">
+
+                    <TextView
+                        android:id="@+id/tv_label_product"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/product"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toStartOf="@id/tv_label_quantity"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_label_quantity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quantity_label"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toStartOf="@id/tv_label_price"
+                        app:layout_constraintStart_toEndOf="@id/tv_label_product"
+                        app:layout_constraintTop_toTopOf="@id/tv_label_product" />
+
+                    <TextView
+                        android:id="@+id/tv_label_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/price_un"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toStartOf="@id/tv_label_amount"
+                        app:layout_constraintStart_toEndOf="@id/tv_label_quantity"
+                        app:layout_constraintTop_toTopOf="@id/tv_label_product" />
+
+                    <TextView
+                        android:id="@+id/tv_label_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/import_label"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_label_price"
+                        app:layout_constraintTop_toTopOf="@id/tv_label_product" />
+
+                    <TextView
+                        android:id="@+id/tv_product"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toStartOf="@id/tv_label_quantity"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_label_amount"
+                        tools:text="PREMIUM" />
+
+                    <TextView
+                        android:id="@+id/tv_quantity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toStartOf="@id/tv_label_price"
+                        app:layout_constraintStart_toEndOf="@id/tv_product"
+                        app:layout_constraintTop_toTopOf="@id/tv_product"
+                        tools:text="7.249" />
+
+                    <TextView
+                        android:id="@+id/tv_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toStartOf="@id/tv_amount"
+                        app:layout_constraintStart_toEndOf="@id/tv_quantity"
+                        app:layout_constraintTop_toTopOf="@id/tv_product"
+                        tools:text="$27.59" />
+
+                    <TextView
+                        android:id="@+id/tv_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_price"
+                        app:layout_constraintTop_toTopOf="@id/tv_product"
+                        tools:text="$200.00" />
+
+                    <View
+                        android:id="@+id/view_separator_total"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginVertical="8dp"
+                        android:background="@drawable/dotted_line"
+                        app:layout_constraintTop_toBottomOf="@id/tv_amount" />
+
+                    <TextView
+                        android:id="@+id/tv_label_total"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/total_m_n"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toStartOf="@id/tv_label_quantity"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view_separator_total" />
+
+                    <TextView
+                        android:id="@+id/tv_total"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_price"
+                        app:layout_constraintTop_toTopOf="@id/tv_label_total"
+                        tools:text="$200.00" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="@drawable/dotted_line"
+                    app:layout_constraintTop_toBottomOf="@id/amount_container" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/id_payment_method_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/amount_container">
+
+                    <TextView
+                        android:id="@+id/tv_payment_method_ticket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Forma de pago: Efectivo" />
+
+                    <TextView
+                        android:id="@+id/tv_payment_method_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/amount_money"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_payment_method_ticket" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/card_information_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:text="@string/total_m_n"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toStartOf="@id/tv_label_quantity"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/view_separator_total" />
+                    app:layout_constraintTop_toBottomOf="@id/id_payment_method_container">
 
-                <TextView
-                    android:id="@+id/tv_total"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tv_price"
-                    app:layout_constraintTop_toTopOf="@id/tv_label_total"
-                    tools:text="$200.00" />
+                    <include
+                        android:id="@+id/card_payment_container"
+                        layout="@layout/item_voucher_card"
+                        android:visibility="gone" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_cards_resume"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_voucher_linear_card" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/dotted_line"
-                app:layout_constraintTop_toBottomOf="@id/amount_container" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/id_payment_method_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                app:layout_constraintTop_toBottomOf="@id/amount_container">
-
-                <TextView
-                    android:id="@+id/tv_payment_method_ticket"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Forma de pago: Efectivo" />
-
-                <TextView
-                    android:id="@+id/tv_payment_method_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/amount_money"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_payment_method_ticket" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/card_information_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/id_payment_method_container">
-
-                <include
-                    android:id="@+id/card_payment_container"
-                    layout="@layout/item_voucher_card"
-                    android:visibility="gone" />
-
-                <androidx.recyclerview.widget.RecyclerView
+                <!--<androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_cards_resume"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_voucher_linear_card" />
+                    app:layout_constraintTop_toBottomOf="@id/card_information_container"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_payment_method" />-->
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!--<androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_cards_resume"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/card_information_container"
-                tools:itemCount="4"
-                tools:listitem="@layout/item_payment_method" />-->
-
-            <View
-                android:id="@+id/view_separator_spin_premia"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginVertical="8dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/dotted_line"
-                app:layout_constraintTop_toBottomOf="@id/card_information_container" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/spin_information_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_separator_spin_premia">
+                <View
+                    android:id="@+id/view_separator_spin_premia"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/dotted_line"
+                    app:layout_constraintTop_toBottomOf="@id/card_information_container" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/not_spin_premia_container"
+                    android:id="@+id/spin_information_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/view_separator_spin_premia">
 
-                    <ImageView
-                        android:id="@+id/iv_logo_spin_premia"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:src="@drawable/logo_spins"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tv_spin_premia_description"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/not_spin_premia_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/sing_in_spin_premia"
-                        android:textAlignment="center"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/iv_logo_spin_premia" />
+                        app:layout_constraintTop_toTopOf="parent">
 
+                        <ImageView
+                            android:id="@+id/iv_logo_spin_premia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:src="@drawable/logo_spins"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_spin_premia_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/sing_in_spin_premia"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/iv_logo_spin_premia" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/has_spin_premia_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/iv_logo_has_spin_premia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:src="@drawable/logo_spins"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_label_spin_premia"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/spin_premia_resume"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            app:layout_constraintTop_toBottomOf="@id/iv_logo_has_spin_premia" />
+
+                        <TextView
+                            android:id="@+id/tv_spin_premia_points"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/points_spin_premia"
+                            android:textAlignment="center"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            app:layout_constraintTop_toBottomOf="@id/tv_label_spin_premia" />
+
+                        <TextView
+                            android:id="@+id/tv_label_mechanic"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/mechanic_spin_premia"
+                            android:textAlignment="center"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            app:layout_constraintTop_toBottomOf="@id/tv_spin_premia_points" />
+
+                        <TextView
+                            android:id="@+id/tv_oxxo_gas_spin_premia"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/more_information_spin_premia"
+                            android:textAlignment="center"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            app:layout_constraintTop_toBottomOf="@id/tv_label_mechanic" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/has_spin_premia_container"
+                <View
+                    android:id="@+id/blanck2"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginVertical="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/spin_information_container" />
+
+                <View
+                    android:id="@+id/view_separator_spin_premia2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/dotted_line"
+                    app:layout_constraintTop_toBottomOf="@id/blanck2" />
+
+                <TextView
+                    android:id="@+id/tv_label_description_billing"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/scan_billing"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/view_separator_spin_premia2" />
 
-                    <ImageView
-                        android:id="@+id/iv_logo_has_spin_premia"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:src="@drawable/logo_spins"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/iv_qr"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="20dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_description_billing" />
 
-                    <TextView
-                        android:id="@+id/tv_label_spin_premia"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/spin_premia_resume"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        app:layout_constraintTop_toBottomOf="@id/iv_logo_has_spin_premia" />
+                <TextView
+                    android:id="@+id/tv_label_qr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/want_listening"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_qr" />
 
-                    <TextView
-                        android:id="@+id/tv_spin_premia_points"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/points_spin_premia"
-                        android:textAlignment="center"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        app:layout_constraintTop_toBottomOf="@id/tv_label_spin_premia" />
+                <View
+                    android:id="@+id/view_separator_qr"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="@drawable/dotted_line"
+                    app:layout_constraintTop_toBottomOf="@id/tv_label_qr" />
 
-                    <TextView
-                        android:id="@+id/tv_label_mechanic"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/mechanic_spin_premia"
-                        android:textAlignment="center"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        app:layout_constraintTop_toBottomOf="@id/tv_spin_premia_points" />
+                <TextView
+                    android:id="@+id/tv_information"
+                    style="@style/BlackBoldText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/client_attention_information"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_separator_qr" />
 
-                    <TextView
-                        android:id="@+id/tv_oxxo_gas_spin_premia"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/more_information_spin_premia"
-                        android:textAlignment="center"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"
-                        app:layout_constraintTop_toBottomOf="@id/tv_label_mechanic" />
+                <View
+                    android:id="@+id/view_separator_information"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="@drawable/dotted_line"
+                    app:layout_constraintTop_toBottomOf="@id/tv_information" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/thanks_for_thrust"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_separator_information" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:id="@+id/blanck2"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_marginVertical="8dp"
-                app:layout_constraintTop_toBottomOf="@id/spin_information_container" />
+            <include
+                android:id="@+id/genereting_ticket"
+                layout="@layout/item_generate_ticket" />
 
-            <View
-                android:id="@+id/view_separator_spin_premia2"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginVertical="8dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/dotted_line"
-                app:layout_constraintTop_toBottomOf="@id/blanck2" />
-
-            <TextView
-                android:id="@+id/tv_label_description_billing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/scan_billing"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_separator_spin_premia2" />
-
-            <ImageView
-                android:id="@+id/iv_qr"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:layout_marginTop="20dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_label_description_billing" />
-
-            <TextView
-                android:id="@+id/tv_label_qr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/want_listening"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_qr" />
-
-            <View
-                android:id="@+id/view_separator_qr"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/dotted_line"
-                app:layout_constraintTop_toBottomOf="@id/tv_label_qr" />
-
-            <TextView
-                android:id="@+id/tv_information"
-                style="@style/BlackBoldText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/client_attention_information"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_separator_qr" />
-
-            <View
-                android:id="@+id/view_separator_information"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/dotted_line"
-                app:layout_constraintTop_toBottomOf="@id/tv_information" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/thanks_for_thrust"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_separator_information" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/finish_container"
+        android:id="@+id/foot_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/box_white"
         android:paddingTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <View
-            android:id="@+id/view_separator"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/gray"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_send_email"
+            style="@style/BlackButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/border_orange"
             app:layout_constraintEnd_toStartOf="@id/btn_print"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_separator">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_email"
+                android:src="@drawable/icon_credit_card"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_email_label"
+                app:layout_constraintEnd_toStartOf="@id/tv_email_label"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/tv_email_label"
+                app:tint="@color/white" />
 
             <TextView
+                android:id="@+id/tv_email_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/to_email"
-                android:textColor="@color/orange"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_email"
+                android:text="@string/email_resume"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_email"
-                app:layout_constraintTop_toTopOf="@id/iv_email" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_print"
+            style="@style/BlackButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/border_orange"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_send_email"
-            app:layout_constraintTop_toBottomOf="@id/view_separator">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_print"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_print"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/icon_credit_card"
+                app:layout_constraintBottom_toBottomOf="@id/tv_print_label"
+                app:layout_constraintEnd_toStartOf="@id/tv_print_label"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/tv_print_label"
+                app:tint="@color/white" />
 
             <TextView
+                android:id="@+id/tv_print_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/print"
-                android:textColor="@color/orange"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_print"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_print"
-                app:layout_constraintTop_toTopOf="@id/iv_print" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/btn_finish"
-            style="@style/RedButton"
+            style="@style/GreenButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/finish"
-            app:layout_constraintTop_toBottomOf="@id/btn_print" />
+            android:layout_marginEnd="5dp"
+            app:layout_constraintTop_toBottomOf="@id/btn_print">
+
+            <ImageView
+                android:id="@+id/iv_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_white_check"
+                app:layout_constraintEnd_toStartOf="@id/tv_finish"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Finalizar Venta"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_finish"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_finish"
+                app:layout_constraintTop_toTopOf="@id/iv_finish" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

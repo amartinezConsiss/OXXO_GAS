@@ -61,7 +61,7 @@
     <string name="total_amount">Total a pagar</string>
     <string name="cash_payment">Pago en efectivo</string>
     <string name="cash_receipt">Recibo en efectivo</string>
-    <string name="to_email">Por correo</string>
+    <string name="email_resume">Correo</string>
     <string name="print">Imprimir</string>
     <string name="finish">Terminar</string>
     <string name="cash_method">Pago Efectivo</string>
@@ -108,4 +108,6 @@
     <string name="cant_price">CANT. %sLTS | 1LT %s</string>
     <string name="amount_to_pay">Monto a pagar</string>
     <string name="accept">Aceptar</string>
+    <string name="payment_made">Pago realizado</string>
+    <string name="generating_ticket">Generando ticket...</string>
 </resources>

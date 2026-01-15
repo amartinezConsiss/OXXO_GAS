@@ -45,7 +45,7 @@ class PaymentBottomSheetDialog(private val totalAmount: Double, private val meth
             binding.tvExchange.visibility = View.GONE
             binding.tvLabelExchange.visibility = View.GONE
 
-            binding.tvLabelPayment.text = getString(R.string.pay_with_card)
+            binding.titlePayment.text = getString(R.string.pay_with_card)
             binding.ivPayment.setImageResource(R.drawable.icon_credit_card)
             binding.ivPayment.imageTintList =
                 ContextCompat.getColorStateList(requireContext(), R.color.black)

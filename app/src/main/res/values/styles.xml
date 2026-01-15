@@ -101,4 +101,10 @@
         <item name="android:background">@drawable/border_red</item>
     </style>
 
+    <style name="BlackButton" parent="Platform.MaterialComponents.Light">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">@drawable/box_black</item>
+    </style>
+
 </resources>

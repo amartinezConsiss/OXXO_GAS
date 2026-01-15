@@ -27,7 +27,7 @@ import com.example.oxxogas.ui.main.utils.buildZplMixedTicket
 import com.example.oxxogas.ui.main.utils.generateQr
 import com.example.oxxogas.ui.main.utils.setCurrencyFormat
 import com.example.oxxogas.ui.main.utils.setSafeOnClickListener
-import com.example.oxxogas.ui.resumeticket.MixedCardResumeAdapter
+import com.example.oxxogas.ui.resumeticket.adapter.MixedCardResumeAdapter
 import com.example.oxxogas.ui.resumeticket.dialogs.SendEmailBottomSheetDialog
 import com.example.oxxogas.ui.resumeticket.interfaces.PrinterCallback
 import com.example.oxxogas.ui.resumeticket.utils.DummyData
@@ -37,6 +37,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -68,9 +69,12 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
     override fun initView(view: View, savedState: Bundle?) {
         sendEmailBottomSheetDialog = SendEmailBottomSheetDialog()
         parentActivity = activity as? HomeActivity
+        getShopInformation()
         sendEmail()
         loadTicket()
         initObservers()
+        loadingTicket()
+
         val qrBitmap = generateQr("https://oxxogas.com/ticket/12345")
         binding.ivQr.setImageBitmap(qrBitmap)
 
@@ -80,9 +84,50 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
             )
 
         }
-
-        showSuccessSnackBar()
     }
+
+    private fun getShopInformation() {
+        if (arguments?.containsKey(Constants.SHOP_INFORMATION) == true) {
+            val shopInformation = arguments?.getString(Constants.SHOP_INFORMATION)
+
+            val gson = Gson()
+            try {
+                shopInformationResponse =
+                    gson.fromJson(shopInformation, ShopInformation::class.java)
+            } catch (e: JsonSyntaxException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun loadingTicket() {
+        val itemGenerateTicket = binding.generetingTicket
+        lifecycleScope.launch {
+            itemGenerateTicket.tvPaymentMade.text =
+                setCurrencyFormat(shopInformationResponse.total ?: 0.0)
+            delay(2500)
+            fadeOutLoaderAndShowTicket()
+        }
+    }
+    private fun fadeOutLoaderAndShowTicket() {
+        val itemGenerateTicket = binding.generetingTicket
+        itemGenerateTicket.mainContainer.animate()
+            .alpha(0f)
+            .setDuration(300)
+            .withEndAction {
+                itemGenerateTicket.mainContainer.visibility = View.GONE
+                itemGenerateTicket.mainContainer.alpha = 1f
+
+                binding.ticketContainer.alpha = 0f
+                binding.ticketContainer.visibility = View.VISIBLE
+                binding.ticketContainer.animate()
+                    .alpha(1f)
+                    .setDuration(300)
+                    .start()
+            }
+            .start()
+    }
+
 
     private fun initObservers() {
         viewModel.sendEmailResult.observe(this) {
@@ -112,68 +157,46 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
         }
     }
 
-    private fun showSuccessSnackBar() {
-        Snackbar
-            .make(
-                requireView(),
-                "Pago registrado correctamente",
-                Snackbar.LENGTH_SHORT
-            )
-            .show()
-    }
-
     private fun loadTicket() {
-        if (arguments?.containsKey(Constants.SHOP_INFORMATION) == true) {
-            val shopInformation = arguments?.getString(Constants.SHOP_INFORMATION)
+        when (shopInformationResponse.methodPayment) {
+            Constants.CARD_PAYMENT_METHOD -> {
+                val resumeTicketData = DummyData().getCardData()
+                resumeTicketData.shopInformation = shopInformationResponse
+                initBtnPrint(resumeTicketData)
 
-            val gson = Gson()
-            try {
-                shopInformationResponse =
-                    gson.fromJson(shopInformation, ShopInformation::class.java)
-            } catch (e: JsonSyntaxException) {
-                e.printStackTrace()
+                loadCardInformation(DummyData().getCardData().cardInformation)
+                loadInformation(DummyData().getCardData())
+                binding.tvPaymentMethodTicket.text =
+                    getString(R.string.payment_method_ticket, getString(R.string.card))
+                binding.tvPaymentMethodAmount.text =
+                    getString(
+                        R.string.amount_money,
+                        setCurrencyFormat(shopInformationResponse.amount ?: 0.0)
+                    )
             }
 
-            when (shopInformationResponse.methodPayment) {
-                Constants.CARD_PAYMENT_METHOD -> {
-                    val resumeTicketData = DummyData().getCardData()
-                    resumeTicketData.shopInformation = shopInformationResponse
-                    initBtnPrint(resumeTicketData)
+            Constants.CASH_PAYMENT_METHOD -> {
+                val resumeTicketData = DummyData().getCashData()
+                resumeTicketData.shopInformation = shopInformationResponse
+                initBtnPrint(resumeTicketData)
 
-                    loadCardInformation(DummyData().getCardData().cardInformation)
-                    loadInformation(DummyData().getCardData())
-                    binding.tvPaymentMethodTicket.text =
-                        getString(R.string.payment_method_ticket, getString(R.string.card))
-                    binding.tvPaymentMethodAmount.text =
-                        getString(
-                            R.string.amount_money,
-                            setCurrencyFormat(shopInformationResponse.amount ?: 0.0)
-                        )
-                }
+                loadInformation(resumeTicketData)
+                binding.cardInformationContainer.visibility = View.GONE
+                binding.tvPaymentMethodTicket.text =
+                    getString(R.string.payment_method_ticket, getString(R.string.cash))
+                binding.tvPaymentMethodAmount.text =
+                    getString(
+                        R.string.amount_money,
+                        setCurrencyFormat(shopInformationResponse.amount ?: 0.0)
+                    )
+            }
 
-                Constants.CASH_PAYMENT_METHOD -> {
-                    val resumeTicketData = DummyData().getCashData()
-                    resumeTicketData.shopInformation = shopInformationResponse
-                    initBtnPrint(resumeTicketData)
-
-                    loadInformation(resumeTicketData)
-                    binding.cardInformationContainer.visibility = View.GONE
-                    binding.tvPaymentMethodTicket.text =
-                        getString(R.string.payment_method_ticket, getString(R.string.cash))
-                    binding.tvPaymentMethodAmount.text =
-                        getString(
-                            R.string.amount_money,
-                            setCurrencyFormat(shopInformationResponse.amount ?: 0.0)
-                        )
-                }
-
-                Constants.MIXED_PAYMENT_METHOD -> {
-                    val resumeTicketData = DummyData().getMixedData()
-                    resumeTicketData.shopInformation = shopInformationResponse
-                    initBtnPrint(resumeTicketData)
-                    loadInformation(DummyData().getMixedData())
-                    loadMixedInformation()
-                }
+            Constants.MIXED_PAYMENT_METHOD -> {
+                val resumeTicketData = DummyData().getMixedData()
+                resumeTicketData.shopInformation = shopInformationResponse
+                initBtnPrint(resumeTicketData)
+                loadInformation(DummyData().getMixedData())
+                loadMixedInformation()
             }
         }
     }

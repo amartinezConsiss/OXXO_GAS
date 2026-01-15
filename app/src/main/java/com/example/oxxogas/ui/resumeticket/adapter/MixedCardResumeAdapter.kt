@@ -1,4 +1,4 @@
-package com.example.oxxogas.ui.resumeticket
+package com.example.oxxogas.ui.resumeticket.adapter
 
 import android.view.LayoutInflater
 import android.view.View
