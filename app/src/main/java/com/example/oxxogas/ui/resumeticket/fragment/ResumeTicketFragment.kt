@@ -48,6 +48,9 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
     private lateinit var sendEmailBottomSheetDialog: SendEmailBottomSheetDialog
     private lateinit var shopInformationResponse: ShopInformation
     private var parentActivity: HomeActivity? = null
+    private val ticketBinding by lazy {
+        binding.ticketContainer
+    }
 
 
     override fun initBinding(): FragmentResumeTicketBinding =
@@ -76,7 +79,7 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
         loadingTicket()
 
         val qrBitmap = generateQr("https://oxxogas.com/ticket/12345")
-        binding.ivQr.setImageBitmap(qrBitmap)
+        ticketBinding.ivQr.setImageBitmap(qrBitmap)
 
         binding.btnFinish.setSafeOnClickListener {
             findNavController().navigate(
@@ -118,9 +121,9 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
                 itemGenerateTicket.mainContainer.visibility = View.GONE
                 itemGenerateTicket.mainContainer.alpha = 1f
 
-                binding.ticketContainer.alpha = 0f
-                binding.ticketContainer.visibility = View.VISIBLE
-                binding.ticketContainer.animate()
+                ticketBinding.mainTicketContainer.alpha = 0f
+                ticketBinding.mainTicketContainer.visibility = View.VISIBLE
+                ticketBinding.mainTicketContainer.animate()
                     .alpha(1f)
                     .setDuration(300)
                     .start()
@@ -166,9 +169,9 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
 
                 loadCardInformation(DummyData().getCardData().cardInformation)
                 loadInformation(DummyData().getCardData())
-                binding.tvPaymentMethodTicket.text =
+                ticketBinding.tvPaymentMethodTicket.text =
                     getString(R.string.payment_method_ticket, getString(R.string.card))
-                binding.tvPaymentMethodAmount.text =
+                ticketBinding.tvPaymentMethodAmount.text =
                     getString(
                         R.string.amount_money,
                         setCurrencyFormat(shopInformationResponse.amount ?: 0.0)
@@ -181,10 +184,10 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
                 initBtnPrint(resumeTicketData)
 
                 loadInformation(resumeTicketData)
-                binding.cardInformationContainer.visibility = View.GONE
-                binding.tvPaymentMethodTicket.text =
+                ticketBinding.cardInformationContainer.visibility = View.GONE
+                ticketBinding.tvPaymentMethodTicket.text =
                     getString(R.string.payment_method_ticket, getString(R.string.cash))
-                binding.tvPaymentMethodAmount.text =
+                ticketBinding.tvPaymentMethodAmount.text =
                     getString(
                         R.string.amount_money,
                         setCurrencyFormat(shopInformationResponse.amount ?: 0.0)
@@ -202,27 +205,27 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
     }
 
     private fun loadInformation(response: ResumeTicketData) {
-        binding.tvNameStation.text = response.station
-        binding.addressStationName.text = getString(R.string.address, response.address)
-        binding.colabName.text =
+        ticketBinding.tvNameStation.text = response.station
+        ticketBinding.addressStationName.text = getString(R.string.address, response.address)
+        ticketBinding.colabName.text =
             getString(R.string.gas_name_attendant, response.gasStationAttendant)
-        binding.tvDateTicket.text = getString(R.string.date, response.date)
-        binding.tvTimeTicket.text = getString(R.string.time, response.time)
-        binding.tvFolioTicket.text = getString(R.string.folio, response.folio)
-        binding.tvPumpTicket.text =
+        ticketBinding.tvDateTicket.text = getString(R.string.date, response.date)
+        ticketBinding.tvTimeTicket.text = getString(R.string.time, response.time)
+        ticketBinding.tvFolioTicket.text = getString(R.string.folio, response.folio)
+        ticketBinding.tvPumpTicket.text =
             getString(R.string.pump_resume, shopInformationResponse.pump.toString())
-        binding.tvProduct.text = shopInformationResponse.typeProduct
-        binding.tvQuantity.text = shopInformationResponse.quantity.toString()
-        binding.tvPrice.text = setCurrencyFormat(shopInformationResponse.price ?: 0.0)
-        binding.tvAmount.text = setCurrencyFormat(shopInformationResponse.amount ?: 0.0)
-        binding.tvTotal.text = setCurrencyFormat(shopInformationResponse.total ?: 0.0)
+        ticketBinding.tvProduct.text = shopInformationResponse.typeProduct
+        ticketBinding.tvQuantity.text = shopInformationResponse.quantity.toString()
+        ticketBinding.tvPrice.text = setCurrencyFormat(shopInformationResponse.price ?: 0.0)
+        ticketBinding.tvAmount.text = setCurrencyFormat(shopInformationResponse.amount ?: 0.0)
+        ticketBinding.tvTotal.text = setCurrencyFormat(shopInformationResponse.total ?: 0.0)
         if (shopInformationResponse.hasSpinPremia == false) {
-            binding.notSpinPremiaContainer.visibility = View.VISIBLE
-            binding.hasSpinPremiaContainer.visibility = View.GONE
+            ticketBinding.notSpinPremiaContainer.visibility = View.VISIBLE
+            ticketBinding.hasSpinPremiaContainer.visibility = View.GONE
         } else {
-            binding.notSpinPremiaContainer.visibility = View.GONE
-            binding.hasSpinPremiaContainer.visibility = View.VISIBLE
-            binding.tvSpinPremiaPoints.text =
+            ticketBinding.notSpinPremiaContainer.visibility = View.GONE
+            ticketBinding.hasSpinPremiaContainer.visibility = View.VISIBLE
+            ticketBinding.tvSpinPremiaPoints.text =
                 getString(
                     R.string.points_spin_premia,
                     String.format("%.2f", DummyData().getPoints())
@@ -232,8 +235,8 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
     }
 
     private fun loadCardInformation(cardInformation: CardInformation?) {
-        val cardInformationBinding = binding.cardPaymentContainer
-        binding.cardPaymentContainer.mainCardContainer.visibility = View.VISIBLE
+        val cardInformationBinding = ticketBinding.cardPaymentContainer
+        ticketBinding.cardPaymentContainer.mainCardContainer.visibility = View.VISIBLE
         cardInformationBinding.cardNumber.text = cardInformation?.cardNumber
         cardInformationBinding.bankInformation.text = getString(
             R.string.card_information,
@@ -252,30 +255,30 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
     }
 
     private fun loadMixedInformation() {
-        binding.cardPaymentContainer.mainCardContainer.visibility = View.GONE
+        ticketBinding.cardPaymentContainer.mainCardContainer.visibility = View.GONE
 
         if (shopInformationResponse.cashAmount!! > 0.0) {
-            binding.tvPaymentMethodTicket.text =
+            ticketBinding.tvPaymentMethodTicket.text =
                 getString(R.string.payment_method_ticket, getString(R.string.cash))
-            binding.tvPaymentMethodAmount.text =
+            ticketBinding.tvPaymentMethodAmount.text =
                 getString(
                     R.string.amount_money,
                     setCurrencyFormat(shopInformationResponse.cashAmount ?: 0.0)
                 )
         } else {
-            binding.tvPaymentMethodTicket.visibility = View.GONE
-            binding.tvPaymentMethodAmount.visibility = View.GONE
+            ticketBinding.tvPaymentMethodTicket.visibility = View.GONE
+            ticketBinding.tvPaymentMethodAmount.visibility = View.GONE
         }
 
         if (!shopInformationResponse.cardsMixedInformation.isNullOrEmpty()) {
             val adapter = MixedCardResumeAdapter(
                 shopInformationResponse.cardsMixedInformation ?: mutableListOf()
             )
-            binding.rvCardsResume.isNestedScrollingEnabled = false
-            binding.rvCardsResume.layoutManager =
+            ticketBinding.rvCardsResume.isNestedScrollingEnabled = false
+            ticketBinding.rvCardsResume.layoutManager =
                 LinearLayoutManager(requireContext())
-            binding.rvCardsResume.adapter = adapter
-            binding.rvCardsResume.setHasFixedSize(false)
+            ticketBinding.rvCardsResume.adapter = adapter
+            ticketBinding.rvCardsResume.setHasFixedSize(false)
         }
     }
 
