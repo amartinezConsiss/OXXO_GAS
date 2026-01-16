@@ -18,5 +18,6 @@ class ErrorBottomSheetDialog(
         binding.titleError.setText(titleError)
         binding.iconError.setImageResource(iconError)
         binding.messageError.setText(messageSuccess)
+        this.isCancelable = false
     }
 }

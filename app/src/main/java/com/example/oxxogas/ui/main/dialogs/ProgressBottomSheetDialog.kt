@@ -15,5 +15,6 @@ class ProgressBottomSheetDialog(
     override fun initView(view: View, saveState: Bundle?) {
         binding.ivProgressType.setImageResource(iconType)
         binding.titleProgress.setText(titleProgress)
+        this.isCancelable = false
     }
 }

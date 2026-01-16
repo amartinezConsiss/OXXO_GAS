@@ -46,14 +46,15 @@ class CardPaymentBottomSheetDialog(private val totalAmount: Double) :
         }
         binding.tvAmountToPay.text = setCurrencyFormat(totalAmount)
 
-        binding.root.setSafeOnClickListener {
-            it.isEnabled = false
+        binding.root.setSafeOnClickListener {button->
+            button.isEnabled = false
+            this.isCancelable = false
+            customResultPaymentView()
             loadSuccessAnimation()
             binding.tvAmountToPay.visibility = View.GONE
             binding.btnCancelCardPayment.visibility = View.INVISIBLE
             binding.tvLabelAmountToPay.visibility = View.GONE
             binding.tvInstructionsCard.text = "Cargo a tarjeta realizado\n correctamente"
-            customResultPaymentView()
         }
     }
 

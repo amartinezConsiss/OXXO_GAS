@@ -17,5 +17,6 @@ class SuccessBottomDialog(
         binding.ivSuccessType.setImageResource(iconType)
         binding.titleSuccess.setText(titleSuccess)
         binding.messageSuccess.setText(messageSuccess)
+        this.isCancelable = false
     }
 }
