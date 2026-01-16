@@ -6,8 +6,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.example.oxxogas.databinding.LayoutToolbarBinding
+import com.example.oxxogas.ui.main.dialogs.ErrorBottomSheetDialog
 import com.example.oxxogas.ui.main.dialogs.ProgressBottomSheetDialog
 import com.example.oxxogas.ui.main.dialogs.ProgressDialog
+import com.example.oxxogas.ui.main.dialogs.SuccessBottomDialog
 import com.example.oxxogas.ui.main.utils.setSafeOnClickListener
 
 abstract class BaseActivity<T> : AppCompatActivity() where T : ViewBinding {
@@ -17,6 +19,10 @@ abstract class BaseActivity<T> : AppCompatActivity() where T : ViewBinding {
     private lateinit var progressDialog: ProgressDialog
 
     private lateinit var progressButtonDialog: ProgressBottomSheetDialog
+
+    private lateinit var successButtonDialog: SuccessBottomDialog
+
+    private lateinit var errorButtonDialog: ErrorBottomSheetDialog
     abstract fun initBinding(): T
 
     abstract fun initView(saveInstanceState: Bundle?)
@@ -58,8 +64,8 @@ abstract class BaseActivity<T> : AppCompatActivity() where T : ViewBinding {
         progressDialog.dismiss()
     }
 
-    fun showProgressBottomDialog() {
-        progressButtonDialog = ProgressBottomSheetDialog()
+    fun showProgressBottomDialog(iconProgress: Int, titleProgress: Int) {
+        progressButtonDialog = ProgressBottomSheetDialog(iconProgress, titleProgress)
         progressButtonDialog.show(
             supportFragmentManager, "Progress Dialog"
         )
@@ -67,6 +73,34 @@ abstract class BaseActivity<T> : AppCompatActivity() where T : ViewBinding {
 
     fun dismissProgressBottomDialog() {
         progressButtonDialog.dismiss()
+    }
+
+    fun showSuccessBottomDialog(iconSuccess: Int, titleSuccess: Int, messageSuccess: Int) {
+        successButtonDialog = SuccessBottomDialog(iconSuccess, titleSuccess, messageSuccess)
+        successButtonDialog.show(
+            supportFragmentManager, "Progress Dialog"
+        )
+    }
+
+    fun dismissSucessBottomDialog() {
+        successButtonDialog.dismiss()
+    }
+
+    fun showErrorBottomDialog(
+        iconTypeError: Int,
+        titleError: Int,
+        iconError: Int,
+        messageError: Int
+    ) {
+        errorButtonDialog =
+            ErrorBottomSheetDialog(iconTypeError, titleError, iconError, messageError)
+        errorButtonDialog.show(
+            supportFragmentManager, "Progress Dialog"
+        )
+    }
+
+    fun dismissErrorBottomDialog() {
+        errorButtonDialog.dismiss()
     }
 
     fun enableBack() {

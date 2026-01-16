@@ -36,14 +36,14 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_card_bulleted_settings"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_spin_tittle"
+                app:layout_constraintEnd_toStartOf="@id/tv_spin_title"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:tint="@color/black" />
 
             <TextView
-                android:id="@+id/tv_spin_tittle"
+                android:id="@+id/tv_spin_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"

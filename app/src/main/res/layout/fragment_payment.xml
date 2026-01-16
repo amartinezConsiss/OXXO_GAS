@@ -17,8 +17,8 @@
             layout="@layout/layout_toolbar" />
 
         <TextView
-            android:id="@+id/tittle_payment_fragment"
-            style="@style/TittleText"
+            android:id="@+id/title_payment_fragment"
+            style="@style/TitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -32,7 +32,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/box_white"
             android:padding="15dp"
-            app:layout_constraintTop_toBottomOf="@id/tittle_payment_fragment">
+            app:layout_constraintTop_toBottomOf="@id/title_payment_fragment">
 
             <TextView
                 android:id="@+id/tv_product"
@@ -93,7 +93,7 @@
 
             <TextView
                 android:id="@+id/tv_outstanding_payment_amount"
-                style="@style/TittleText"
+                style="@style/TitleText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

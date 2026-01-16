@@ -11,13 +11,13 @@
     <ImageView
         android:id="@+id/iv_pump"
         android:layout_width="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content"
         android:src="@drawable/img_gas_blue"
         app:layout_constraintBottom_toTopOf="@id/pump_title"
-        android:layout_height="wrap_content"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/pump_title"

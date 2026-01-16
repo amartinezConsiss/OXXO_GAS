@@ -112,6 +112,7 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
             fadeOutLoaderAndShowTicket()
         }
     }
+
     private fun fadeOutLoaderAndShowTicket() {
         val itemGenerateTicket = binding.generetingTicket
         itemGenerateTicket.mainContainer.animate()
@@ -136,25 +137,37 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
         viewModel.sendEmailResult.observe(this) {
             when (it) {
                 is BaseResponse.Success -> {
-                    parentActivity?.dismissProgressDialog()
-                    Toast.makeText(
-                        requireContext(),
-                        "Se envio el correo con éxito",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    parentActivity?.dismissProgressBottomDialog()
+                    parentActivity?.showSuccessBottomDialog(
+                        R.drawable.icon_email,
+                        R.string.for_email,
+                        R.string.email_success
+                    )
+                    lifecycleScope.launch {
+                        delay(2500)
+                        parentActivity?.dismissSucessBottomDialog()
+                    }
                 }
 
                 is BaseResponse.Loading -> {
-                    parentActivity?.showProgressDialog()
+                    parentActivity?.showProgressBottomDialog(
+                        R.drawable.icon_email,
+                        R.string.for_email
+                    )
                 }
 
                 is BaseResponse.Error -> {
-                    parentActivity?.dismissProgressDialog()
-                    Toast.makeText(
-                        requireContext(),
-                        "Ocurrio un error al enviar el correo",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    lifecycleScope.launch {
+                        parentActivity?.dismissProgressBottomDialog()
+                        parentActivity?.showErrorBottomDialog(
+                            R.drawable.icon_print,
+                            R.string.for_email,
+                            R.drawable.img_message_error,
+                            R.string.message_email_error
+                        )
+                        delay(2500)
+                        parentActivity?.dismissErrorBottomDialog()
+                    }
                 }
             }
         }
@@ -286,7 +299,10 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
         binding.btnPrint.setSafeOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 requireActivity().runOnUiThread {
-                    parentActivity?.showProgressDialog()
+                    parentActivity?.showProgressBottomDialog(
+                        R.drawable.icon_print,
+                        R.string.ticket_printing
+                    )
                 }
                 try {
                     val printer = ZQ320PrinterManager("AC:3F:A4:E7:B4:C5", requireContext())
@@ -316,18 +332,18 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
 
                         override fun onFinish() {
                             requireActivity().runOnUiThread {
-                                parentActivity?.dismissProgressDialog()
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Impresión finalizada",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                parentActivity?.dismissProgressBottomDialog()
+                                parentActivity?.showSuccessBottomDialog(
+                                    R.drawable.icon_print,
+                                    R.string.ticket_printing,
+                                    R.string.ticket_printing_success
+                                )
                             }
                         }
 
                         override fun onError(message: String) {
                             requireActivity().runOnUiThread {
-                                parentActivity?.dismissProgressDialog()
+                                parentActivity?.dismissProgressBottomDialog()
                                 Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
                             }
                         }
@@ -336,8 +352,18 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
 
                 } catch (e: Exception) {
                     requireActivity().runOnUiThread {
-                        parentActivity?.dismissProgressDialog()
-                        Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+                        lifecycleScope.launch {
+                            parentActivity?.dismissProgressBottomDialog()
+                            parentActivity?.showErrorBottomDialog(
+                                R.drawable.icon_print,
+                                R.string.ticket_printing,
+                                R.drawable.img_message_error,
+                                R.string.message_print_error
+                            )
+                            delay(2500)
+                            parentActivity?.dismissErrorBottomDialog()
+                        }
+
                     }
                 }
             }

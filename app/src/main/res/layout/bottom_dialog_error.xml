@@ -7,19 +7,19 @@
     android:padding="20dp">
 
     <ImageView
-        android:id="@+id/iv_progress_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/iv_error_type"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:src="@drawable/icon_print"
-        app:layout_constraintBottom_toBottomOf="@id/title_progress"
-        app:layout_constraintEnd_toStartOf="@id/title_progress"
+        app:layout_constraintBottom_toBottomOf="@id/title_error"
+        app:layout_constraintEnd_toStartOf="@id/title_error"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/title_progress"
+        app:layout_constraintTop_toTopOf="@id/title_error"
         app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/title_progress"
+        android:id="@+id/title_error"
         style="@style/BlackText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,30 +27,28 @@
         android:layout_marginTop="10dp"
         android:text="@string/ticket_printing"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_progress_type"
+        app:layout_constraintStart_toEndOf="@id/iv_error_type"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
+    <ImageView
+        android:id="@+id/icon_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:backgroundTint="@color/gray"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/black"
-        android:progressTint="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/title_progress" />
+        android:src="@drawable/img_message_error"
+        app:layout_constraintTop_toBottomOf="@id/title_error" />
 
     <TextView
+        android:id="@+id/message_error"
         style="@style/BlackText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="30dp"
-        android:text="@string/processing"
+        android:text="@string/message_print_error"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progress_bar" />
+        app:layout_constraintTop_toBottomOf="@id/icon_error" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

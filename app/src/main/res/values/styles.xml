@@ -7,13 +7,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TittleText" parent="Theme.AppCompat.Light">
+    <style name="TitleText" parent="Theme.AppCompat.Light">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="SubTittleText" parent="Theme.AppCompat.Light">
+    <style name="SubTitleText" parent="Theme.AppCompat.Light">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>

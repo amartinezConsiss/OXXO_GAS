@@ -1,22 +1,16 @@
 package com.example.oxxogas.ui.newsale.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.oxxogas.R
-import com.example.oxxogas.domain.models.PetrolPumpsList
 import com.example.oxxogas.databinding.FragmentNewSaleBinding
 import com.example.oxxogas.ui.home.activities.HomeActivity
 import com.example.oxxogas.ui.main.fragments.BaseFragment
 import com.example.oxxogas.ui.main.utils.Constants
-import com.example.oxxogas.ui.newsale.dialogs.DisabledPumpBottomSheetDialog
 import com.example.oxxogas.ui.newsale.adapters.NewSalePetrolPumpAdapter
-import com.example.oxxogas.ui.newsale.dialogs.AskSpinBottomSheetDialog
-import com.example.oxxogas.ui.newsale.dialogs.ErrorConnectionBottomSheetDialog
-import com.example.oxxogas.ui.newsale.dialogs.SpinPremiaBottomSheetDialog
 import com.example.oxxogas.ui.newsale.viewmodels.NewSaleViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -46,7 +40,7 @@ class NewSaleFragment :
                 if (status == 1) {
                     goToPaymentFragment(pompId)
                 } else {
-                    showDisabledPomp()
+                    showDisabledPomp(status)
                 }
 
             }
@@ -54,106 +48,57 @@ class NewSaleFragment :
         binding.rvPetrolPumps.isNestedScrollingEnabled = false
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun showAskSpinPremiaDialog(pumpId: Int) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            showAlert()
-
-            val askSpinPremiaDialog = AskSpinBottomSheetDialog()
-            askSpinPremiaDialog.onPositiveActionClick = {
-                showSpinPremiaDialog(pumpId)
+    private fun showDisabledPomp(idStatus: Int) {
+        when (idStatus) {
+            2 -> {
+                showErrorAlert(
+                    R.drawable.img_gas_blue,
+                    R.string.error,
+                    R.drawable.img_bad_alert,
+                    R.string.error
+                )
             }
 
-            askSpinPremiaDialog.onNegativeActionClick = {
-                goToPaymentMethods(pumpId, false)
+            3 -> {
+                showErrorAlert(
+                    R.drawable.img_gas_blue,
+                    R.string.closed,
+                    R.drawable.img_gray_close,
+                    R.string.closed
+                )
             }
 
-            askSpinPremiaDialog.onDismissActionClick = {
-                adapter.notifyDataSetChanged()
+            4 -> {
+                showErrorAlert(
+                    R.drawable.img_gas_blue,
+                    R.string.in_use,
+                    R.drawable.img_gas_blue,
+                    R.string.in_use
+                )
             }
+        }
+    }
 
-            askSpinPremiaDialog.show(
-                parentFragmentManager,
-                Constants.TAG_ASK_SPIN_PREMIA_DIALOG
+    private fun showErrorAlert(
+        iconTypeError: Int,
+        titleError: Int,
+        iconError: Int,
+        messageError: Int
+    ) {
+        lifecycleScope.launch {
+            parentActivity?.showErrorBottomDialog(
+                iconTypeError,
+                titleError,
+                iconError,
+                messageError
             )
-        }
-    }
-
-    private fun showDisabledPomp() {
-        val disabledPompBottomSheetDialog = DisabledPumpBottomSheetDialog()
-        disabledPompBottomSheetDialog.show(
-            parentFragmentManager,
-            Constants.TAG_DISABLED_PUMP_BOTTOM
-        )
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun showErrorConnection() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            showAlert()
-            val errorConnectionDialog = ErrorConnectionBottomSheetDialog()
-
-            errorConnectionDialog.onTryAgainActionClick = {
-                tryAgain()
-            }
-
-            errorConnectionDialog.onCancelActionListener = {
-                adapter.notifyDataSetChanged()
-            }
-
-            errorConnectionDialog.show(
-                parentFragmentManager,
-                Constants.TAG_ERROR_CONNECTION_DIALOG
-            )
-        }
-    }
-
-    private suspend fun showAlert() {
-        parentActivity?.showProgressDialog()
-        delay(3000)
-        parentActivity?.dismissProgressDialog()
-    }
-
-    private fun tryAgain() {
-        showErrorConnection()
-    }
-
-    private fun showSpinPremiaDialog(pumpId: Int) {
-        val spinPremiaDialog = SpinPremiaBottomSheetDialog()
-        spinPremiaDialog.onContinuePhoneActionClick = {
-            validateSpinPremia(pumpId)
+            delay(2500)
+            parentActivity?.dismissErrorBottomDialog()
         }
 
-        spinPremiaDialog.onReadCodeActionClick = { codeSpin ->
-            validateSpinPremia(pumpId)
-        }
-
-        spinPremiaDialog.onCancelActionClick = {
-            goToPaymentMethods(pumpId, false)
-        }
-
-        spinPremiaDialog.show(
-            parentFragmentManager,
-            Constants.TAG_SPIN_PREMIA_BOTTOM_SHEET_DIALOG
-        )
     }
 
-    private fun validateSpinPremia(pumpId: Int) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            showAlert()
-            goToPaymentMethods(pumpId, true)
-        }
-    }
-
-    private fun goToPaymentMethods(pumpId: Int, hasSpinPremia: Boolean) {
-        Bundle().apply {
-            putInt(Constants.PUMP_ID_KEY, pumpId)
-            putBoolean(Constants.HAS_SPIN_PREMIA, hasSpinPremia)
-            findNavController().navigate(R.id.action_payment_methods_fragment, this)
-        }
-    }
-
-    private fun goToPaymentFragment(pumpId: Int){
+    private fun goToPaymentFragment(pumpId: Int) {
         Bundle().apply {
             putInt(Constants.PUMP_ID_KEY, pumpId)
             findNavController().navigate(R.id.action_payment_fragment, this)

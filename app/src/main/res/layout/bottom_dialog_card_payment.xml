@@ -53,7 +53,7 @@
 
     <TextView
         android:id="@+id/tv_amount_to_pay"
-        style="@style/TittleText"
+        style="@style/TitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

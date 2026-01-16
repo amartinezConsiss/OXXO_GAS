@@ -62,7 +62,11 @@
     <string name="cash_payment">Pago en efectivo</string>
     <string name="cash_receipt">Recibo en efectivo</string>
     <string name="email_resume">Correo</string>
+    <string name="for_email">Por correo</string>
+    <string name="email_success">Envío realizado correctamente</string>
     <string name="print">Imprimir</string>
+    <string name="ticket_printing">Impresión de ticket</string>
+    <string name="ticket_printing_success">Impresión completada</string>
     <string name="finish">Terminar</string>
     <string name="cash_method">Pago Efectivo</string>
     <string name="card_method">Pago Tarjeta</string>
@@ -110,4 +114,8 @@
     <string name="accept">Aceptar</string>
     <string name="payment_made">Pago realizado</string>
     <string name="generating_ticket">Generando ticket...</string>
+    <string name="spin_message_success">Tarjeta asociada correctamente</string>
+
+    <string name="message_print_error">Ocurrió un error de\n comunicación con la impresora</string>
+    <string name="message_email_error">Ocurrio un error al enviar el correo</string>
 </resources>

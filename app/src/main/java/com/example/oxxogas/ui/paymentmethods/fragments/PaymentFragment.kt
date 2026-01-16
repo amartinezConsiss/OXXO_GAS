@@ -115,17 +115,21 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
 
     private fun successSpinPremia() {
         lifecycleScope.launch {
-            parentActivity?.showProgressBottomDialog()
+            parentActivity?.showProgressBottomDialog(
+                R.drawable.ic_card_bulleted_settings,
+                R.string.spin_premia2,
+            )
+
             delay(2500)
             parentActivity?.dismissProgressBottomDialog()
 
-            val successBottomDialog = SuccessBottomDialog()
-            successBottomDialog.show(
-                parentFragmentManager,
-                Constants.TAG_SPIN_PREMIA_BOTTOM_SHEET_DIALOG
+            parentActivity?.showSuccessBottomDialog(
+                R.drawable.ic_card_bulleted_settings,
+                R.string.spin_premia2,
+                R.string.spin_message_success
             )
             delay(2500)
-            successBottomDialog.dismiss()
+            parentActivity?.dismissSucessBottomDialog()
             shopInformation.hasSpinPremia = true
             binding.spinBtn.visibility = View.GONE
         }
@@ -139,7 +143,10 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
                 if (paymentMethod == Constants.CARD_PAYMENT_METHOD) {
                     showCardDialog()
                 } else {
-                    parentActivity?.showProgressBottomDialog()
+                    parentActivity?.showProgressBottomDialog(
+                        R.drawable.icon_cash,
+                        R.string.cash_payment
+                    )
                     delay(2500)
                     parentActivity?.dismissProgressBottomDialog()
                     goToResumeFragment()

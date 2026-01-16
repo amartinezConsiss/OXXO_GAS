@@ -36,10 +36,6 @@ class SendEmailBottomSheetDialog : BaseBottomSheetDialog<BottomDialogSendEmailBi
             dismiss()
         }
 
-        binding.btnCloseSuccessEmail.setSafeOnClickListener {
-            dismiss()
-        }
-
         binding.etEnterEmail.afterTextChanged { email ->
             if (isValidEmail(email)) {
                 binding.btnSendEmail.isEnabled = true

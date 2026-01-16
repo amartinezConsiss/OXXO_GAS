@@ -49,7 +49,6 @@ class CardPaymentBottomSheetDialog(private val totalAmount: Double) :
         binding.root.setSafeOnClickListener {
             it.isEnabled = false
             loadSuccessAnimation()
-
             binding.tvAmountToPay.visibility = View.GONE
             binding.btnCancelCardPayment.visibility = View.INVISIBLE
             binding.tvLabelAmountToPay.visibility = View.GONE
@@ -93,6 +92,7 @@ class CardPaymentBottomSheetDialog(private val totalAmount: Double) :
     }
 
     private fun customResultPaymentView() {
+        this.isCancelable = false
         val paramsIvTop = binding.ivCardPay.layoutParams as ViewGroup.MarginLayoutParams
         val paramsBtnTop = binding.btnCancelCardPayment.layoutParams as ViewGroup.MarginLayoutParams
         paramsIvTop.topMargin = resources.getDimensionPixelSize(R.dimen.margin_100)
