@@ -107,4 +107,9 @@ fun NavController.safeNavigate(actionId: Int, bundle: Bundle) {
     }
 }
 
+fun cleanCurrencyFormat(cash: String): BigDecimal {
+    val clean = cash.replace("[^\\d.]".toRegex(), "")
+    return if (cash.isEmpty()) BigDecimal(0.0) else clean.toBigDecimal()
+}
+
 

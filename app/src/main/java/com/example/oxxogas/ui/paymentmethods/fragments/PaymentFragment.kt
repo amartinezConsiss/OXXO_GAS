@@ -9,14 +9,12 @@ import com.example.oxxogas.R
 import com.example.oxxogas.databinding.FragmentPaymentBinding
 import com.example.oxxogas.domain.models.ShopInformation
 import com.example.oxxogas.ui.home.activities.HomeActivity
-import com.example.oxxogas.ui.main.dialogs.SuccessBottomDialog
 import com.example.oxxogas.ui.main.fragments.BaseFragment
 import com.example.oxxogas.ui.main.utils.Constants
 import com.example.oxxogas.ui.main.utils.setCurrencyFormat
 import com.example.oxxogas.ui.main.utils.setSafeOnClickListener
 import com.example.oxxogas.ui.newsale.dialogs.SpinPremiaBottomSheetDialog
 import com.example.oxxogas.ui.paymentmethods.dialogs.CardPaymentBottomSheetDialog
-import com.example.oxxogas.ui.paymentmethods.dialogs.CashPaymentBottomSheetDialog
 import com.example.oxxogas.ui.paymentmethods.dialogs.PaymentBottomSheetDialog
 import com.example.oxxogas.ui.paymentmethods.viewmodels.PaymentViewModel
 import com.google.gson.Gson
@@ -33,7 +31,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
     private var totalAmount: BigDecimal = BigDecimal.ZERO
     private var pumpId: Int = 1
     private val shopInformation = ShopInformation()
-
+    private var isSuccessCard = false
 
     override fun initBinding(): FragmentPaymentBinding =
         FragmentPaymentBinding.inflate(layoutInflater)
@@ -65,12 +63,17 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
 
         binding.cashBtn.setSafeOnClickListener {
             shopInformation.methodPayment = Constants.CASH_PAYMENT_METHOD
-            showPaymentDialogMethod(Constants.CASH_PAYMENT_METHOD)
+            showPaymentDialogMethod()
         }
 
         binding.cardBtn.setSafeOnClickListener {
             shopInformation.methodPayment = Constants.CARD_PAYMENT_METHOD
-            showPaymentDialogMethod(Constants.CARD_PAYMENT_METHOD)
+            showCardDialog()
+        }
+
+        binding.mixedBtn.setSafeOnClickListener {
+            shopInformation.methodPayment = Constants.MIXED_PAYMENT_METHOD
+            goToMixedFragment()
         }
     }
 
@@ -135,22 +138,18 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
         }
     }
 
-    private fun showPaymentDialogMethod(paymentMethod: Int) {
+    private fun showPaymentDialogMethod() {
         val cashDialog =
-            PaymentBottomSheetDialog(totalAmount.toDouble(), paymentMethod)
+            PaymentBottomSheetDialog(totalAmount.toDouble(), Constants.CASH_PAYMENT_METHOD)
         cashDialog.onApplyPaymentCallback = {
             viewLifecycleOwner.lifecycleScope.launch {
-                if (paymentMethod == Constants.CARD_PAYMENT_METHOD) {
-                    showCardDialog()
-                } else {
-                    parentActivity?.showProgressBottomDialog(
-                        R.drawable.icon_cash,
-                        R.string.cash_payment
-                    )
-                    delay(2500)
-                    parentActivity?.dismissProgressBottomDialog()
-                    goToResumeFragment()
-                }
+                parentActivity?.showProgressBottomDialog(
+                    R.drawable.icon_cash,
+                    R.string.cash_payment
+                )
+                delay(2500)
+                parentActivity?.dismissProgressBottomDialog()
+                goToResumeFragment()
             }
         }
         cashDialog.show(parentFragmentManager, Constants.TAG_CASH_BOTTOM_SHEET_DIALOG)
@@ -158,12 +157,24 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
 
     private fun showCardDialog() {
         val cardDialog =
-            CardPaymentBottomSheetDialog(totalAmount.toDouble())
+            CardPaymentBottomSheetDialog(totalAmount.toDouble(), isSuccessCard)
         cardDialog.onPayCardSuccessCallback = {
             cardDialog.dismiss()
             goToResumeFragment()
         }
+        cardDialog.onPayCardFailCallback = {
+
+        }
         cardDialog.show(parentFragmentManager, Constants.TAG_CASH_BOTTOM_SHEET_DIALOG)
+        isSuccessCard = true
+    }
+
+    private fun setBlueBtn(viewBinding: Int){
+
+    }
+
+    private fun setWhiteBtn(viewBinding: Int){
+
     }
 
     private fun goToResumeFragment() {
@@ -171,6 +182,16 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
             putString(Constants.SHOP_INFORMATION, getShopInformation())
             findNavController().navigate(
                 R.id.action_resume_ticket_fragment,
+                this
+            )
+        }
+    }
+
+    private fun goToMixedFragment() {
+        Bundle().apply {
+            putString(Constants.SHOP_INFORMATION, getShopInformation())
+            findNavController().navigate(
+                R.id.action_mixed_payment_fragment,
                 this
             )
         }

@@ -57,6 +57,29 @@
             app:exitAnim="@anim/left_to_right"
             app:popEnterAnim="@anim/right_to_left2"
             app:popExitAnim="@anim/left_to_right2" />
+
+        <action
+            android:id="@+id/action_mixed_payment_fragment"
+            app:destination="@id/mixed_payment_fragment_new"
+            app:enterAnim="@anim/right_to_left"
+            app:exitAnim="@anim/left_to_right"
+            app:popEnterAnim="@anim/right_to_left2"
+            app:popExitAnim="@anim/left_to_right2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mixed_payment_fragment_new"
+        android:name="com.example.oxxogas.ui.paymentmethods.fragments.MixedPaymentFragment"
+        android:label="Resume Ticket"
+        tools:layout="@layout/fragment_mixed_payment">
+
+        <action
+            android:id="@+id/action_mixed_resume_ticket_fragment"
+            app:destination="@id/resume_ticket_fragment"
+            app:enterAnim="@anim/right_to_left"
+            app:exitAnim="@anim/left_to_right"
+            app:popEnterAnim="@anim/right_to_left2"
+            app:popExitAnim="@anim/left_to_right2" />
     </fragment>
 
     <fragment

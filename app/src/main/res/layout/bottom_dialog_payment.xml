@@ -121,7 +121,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="El monto no puede ser menor al\n pendiente por pagar."
+            android:text="El monto no puede ser mayor al\n pendiente por pagar."
             android:textAlignment="center"
             android:textColor="@color/red_stroke"
             android:visibility="gone"
@@ -156,12 +156,11 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_cancel_payment"
-            style="@style/WhiteButton"
+            style="@style/TransparentButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
-            android:enabled="false"
             android:text="@string/cancel"
             app:layout_constraintEnd_toStartOf="@id/btn_apply_amount"
             app:layout_constraintStart_toStartOf="parent"

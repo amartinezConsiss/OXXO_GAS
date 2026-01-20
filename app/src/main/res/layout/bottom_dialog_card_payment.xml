@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:text="@string/cash_payment"
+        android:text="@string/pay_with_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_payment"
         app:layout_constraintTop_toBottomOf="@id/dragHandle" />
@@ -91,4 +91,66 @@
         android:layout_marginTop="45dp"
         android:text="@string/cancel"
         app:layout_constraintTop_toBottomOf="@id/tv_instructions_card" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/instructions_fail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tv_instructions_card">
+
+        <TextView
+            android:id="@+id/error_card"
+            style="@style/WhiteText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tarjeta bloqueada"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/number_card"
+            style="@style/WhiteText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="XXXX XXXX XXXX 7891"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/error_card" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_fail_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_white"
+            app:layout_constraintTop_toBottomOf="@id/number_card">
+
+            <ImageView
+                android:id="@+id/iv_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:src="@drawable/icon_chevron_right"
+                app:layout_constraintEnd_toStartOf="@id/tv_finish"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/continuar"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_finish"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_finish"
+                app:layout_constraintTop_toTopOf="@id/iv_finish" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

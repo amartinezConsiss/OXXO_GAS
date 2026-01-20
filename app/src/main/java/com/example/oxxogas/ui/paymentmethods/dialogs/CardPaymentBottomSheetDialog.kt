@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -18,10 +19,14 @@ import com.example.oxxogas.ui.main.utils.setCurrencyFormat
 import com.example.oxxogas.ui.main.utils.setSafeOnClickListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
-class CardPaymentBottomSheetDialog(private val totalAmount: Double) :
+class CardPaymentBottomSheetDialog(
+    private val totalAmount: Double,
+    private val isSuccess: Boolean = true
+) :
     BaseBottomSheetDialog<BottomDialogCardPaymentBinding>() {
 
     var onPayCardSuccessCallback: (() -> Unit)? = null
+    var onPayCardFailCallback: (() -> Unit)? = null
 
     override fun initBinding(): BottomDialogCardPaymentBinding =
         BottomDialogCardPaymentBinding.inflate(layoutInflater)
@@ -46,22 +51,24 @@ class CardPaymentBottomSheetDialog(private val totalAmount: Double) :
         }
         binding.tvAmountToPay.text = setCurrencyFormat(totalAmount)
 
-        binding.root.setSafeOnClickListener {button->
-            button.isEnabled = false
-            this.isCancelable = false
+        binding.root.setSafeOnClickListener { button ->
             customResultPaymentView()
-            loadSuccessAnimation()
-            binding.tvAmountToPay.visibility = View.GONE
-            binding.btnCancelCardPayment.visibility = View.INVISIBLE
-            binding.tvLabelAmountToPay.visibility = View.GONE
-            binding.tvInstructionsCard.text = "Cargo a tarjeta realizado\n correctamente"
+            if (isSuccess) {
+                button.isEnabled = false
+                this.isCancelable = false
+                loadSuccessAnimation()
+                successView()
+            } else {
+                loadFailAnimation()
+                failedView()
+            }
         }
     }
 
     private fun loadSuccessAnimation() {
         Glide.with(this)
             .asGif()
-            .load(R.drawable.check)
+            .load(R.drawable.check_white)
             .listener(object : RequestListener<GifDrawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
@@ -92,15 +99,59 @@ class CardPaymentBottomSheetDialog(private val totalAmount: Double) :
             .into(binding.ivCardPay)
     }
 
+    private fun loadFailAnimation() {
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.error_white)
+            .into(binding.ivCardPay)
+    }
+
+
     private fun customResultPaymentView() {
-        this.isCancelable = false
+        if (isSuccess) this.isCancelable = false
         val paramsIvTop = binding.ivCardPay.layoutParams as ViewGroup.MarginLayoutParams
         val paramsBtnTop = binding.btnCancelCardPayment.layoutParams as ViewGroup.MarginLayoutParams
-        paramsIvTop.topMargin = resources.getDimensionPixelSize(R.dimen.margin_100)
-        paramsBtnTop.topMargin = resources.getDimensionPixelSize(R.dimen.margin_100)
-
+        paramsIvTop.topMargin = resources.getDimensionPixelSize(R.dimen.margin_125)
+        paramsBtnTop.topMargin = resources.getDimensionPixelSize(R.dimen.margin_125)
         binding.ivCardPay.layoutParams = paramsIvTop
-        //  binding.btnCancelCardPayment.layoutParams = paramsBtnTop
+        binding.ivPayment.imageTintList =
+            ContextCompat.getColorStateList(requireContext(), R.color.white)
+        binding.dragHandle.visibility = View.GONE
+        binding.tvAmountToPay.visibility = View.GONE
+        binding.btnCancelCardPayment.visibility = View.INVISIBLE
+        binding.tvLabelAmountToPay.visibility = View.GONE
+        binding.tvInstructionsCard.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+        binding.titleCardPayment.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.white
+            )
+        )
+    }
+
+    private fun successView() {
+        binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.btn_green))
+        binding.tvInstructionsCard.text = getString(R.string.success_card)
+    }
+
+    private fun failedView() {
+        binding.root.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.red_error_card
+            )
+        )
+        binding.tvInstructionsCard.text = "Transacción Denegada"
+        binding.tvInstructionsCard.isAllCaps = true
+        binding.instructionsFail.visibility = View.VISIBLE
+        binding.btnFailContinue.setSafeOnClickListener {
+            dismiss()
+        }
     }
 
 }

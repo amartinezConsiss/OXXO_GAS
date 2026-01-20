@@ -1,6 +1,5 @@
 package com.example.oxxogas.ui.paymentmethods.dialogs
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -10,14 +9,16 @@ import com.example.oxxogas.ui.main.dialogs.BaseBottomSheetDialog
 import com.example.oxxogas.ui.main.utils.Constants
 import com.example.oxxogas.ui.main.utils.afterTextChanged
 import com.example.oxxogas.ui.main.utils.applyCurrencyFormat
+import com.example.oxxogas.ui.main.utils.cleanCurrencyFormat
 import com.example.oxxogas.ui.main.utils.setCurrencyFormat
 import com.example.oxxogas.ui.main.utils.setSafeOnClickListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import java.math.BigDecimal
 
 class PaymentBottomSheetDialog(private val totalAmount: Double, private val methodType: Int) :
     BaseBottomSheetDialog<BottomDialogPaymentBinding>() {
 
-    var onApplyPaymentCallback: (() -> Unit)? = null
+    var onApplyPaymentCallback: ((BigDecimal) -> Unit)? = null
 
     override fun initBinding(): BottomDialogPaymentBinding =
         BottomDialogPaymentBinding.inflate(layoutInflater)
@@ -56,7 +57,7 @@ class PaymentBottomSheetDialog(private val totalAmount: Double, private val meth
         binding.etEnterAmount.setText(setCurrencyFormat(totalAmount))
         binding.etEnterAmount.applyCurrencyFormat()
         binding.btnApplyAmount.setSafeOnClickListener {
-            onApplyPaymentCallback?.invoke()
+            onApplyPaymentCallback?.invoke(cleanCurrencyFormat(binding.etEnterAmount.text.toString()))
             dismiss()
         }
         binding.btnCancelPayment.setSafeOnClickListener {
@@ -69,17 +70,46 @@ class PaymentBottomSheetDialog(private val totalAmount: Double, private val meth
         binding.etEnterAmount.afterTextChanged { cash ->
             val clean = cash.replace("[^\\d.]".toRegex(), "")
             val amountCash = if (cash.isEmpty()) 0.0 else clean.toDouble()
-            enabledButtonContinue(amountCash >= totalAmount)
 
+            if (methodType == Constants.MIXED_PAYMENT_METHOD) {
+                mixedValidation(amountCash)
+            } else {
+                cashValidation(amountCash)
+            }
+
+        }
+    }
+
+    private fun cashValidation(amountCash: Double) {
+        enabledButtonContinue(amountCash >= totalAmount)
+        if (amountCash > totalAmount) {
+            val exchange = amountCash - totalAmount
+            binding.tvExchange.text = setCurrencyFormat(exchange)
+            binding.tvErrorAmount.visibility = View.GONE
+        } else {
+            binding.tvExchange.text = getString(R.string.zero_amount)
+        }
+    }
+
+    private fun mixedValidation(amountCash: Double) {
+        if (methodType == Constants.CASH_PAYMENT_METHOD) {
+            enabledButtonContinue(amountCash >= 1.00)
             if (amountCash > totalAmount) {
                 val exchange = amountCash - totalAmount
                 binding.tvExchange.text = setCurrencyFormat(exchange)
                 binding.tvErrorAmount.visibility = View.GONE
             } else {
                 binding.tvExchange.text = getString(R.string.zero_amount)
+            }
+        } else {
+            enabledButtonContinue(amountCash in 1.00..totalAmount)
+            if (amountCash > totalAmount) {
                 binding.tvErrorAmount.visibility = View.VISIBLE
+            } else {
+                binding.tvErrorAmount.visibility = View.GONE
             }
         }
+
     }
 
     private fun enabledButtonContinue(validAmount: Boolean) {
