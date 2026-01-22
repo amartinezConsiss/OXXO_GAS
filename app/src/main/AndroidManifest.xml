@@ -30,9 +30,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.home.activities.HomeActivity"
+        <activity
+            android:name=".ui.home.activities.HomeActivity"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

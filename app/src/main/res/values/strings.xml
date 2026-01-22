@@ -119,4 +119,7 @@
     <string name="message_print_error">Ocurrió un error de\n comunicación con la impresora</string>
     <string name="message_email_error">Ocurrio un error al enviar el correo</string>
     <string name="success_card">Cargo a tarjeta realizado\n correctamente</string>
+    <string name="mixed_total_title">Total:</string>
+    <string name="exchange_total_title">Cambio: %s</string>
+    <string name="first_card_payment">Primer pago con tarjeta</string>
 </resources>

@@ -112,4 +112,7 @@ fun cleanCurrencyFormat(cash: String): BigDecimal {
     return if (cash.isEmpty()) BigDecimal(0.0) else clean.toBigDecimal()
 }
 
-
+fun cleanCurrencyDoubleFormat(cash: String): Double {
+    val clean = cash.replace("[^\\d.]".toRegex(), "")
+    return if (cash.isEmpty()) 0.0 else clean.toDouble()
+}

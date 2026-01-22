@@ -108,8 +108,6 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/box_gray_payment"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 app:layout_constraintEnd_toStartOf="@id/mixed_btn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_outstanding_payment_amount">
@@ -146,8 +144,6 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20sp"
                 android:background="@drawable/box_gray_payment"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cash_btn"
                 app:layout_constraintTop_toBottomOf="@id/tv_outstanding_payment_amount">
@@ -182,8 +178,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="10dp"
                 android:background="@drawable/blue_box"
                 app:layout_constraintTop_toBottomOf="@id/cash_btn">
 

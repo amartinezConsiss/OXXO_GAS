@@ -2,6 +2,10 @@ package com.example.oxxogas.ui.paymentmethods.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -64,16 +68,25 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
         binding.cashBtn.setSafeOnClickListener {
             shopInformation.methodPayment = Constants.CASH_PAYMENT_METHOD
             showPaymentDialogMethod()
+            setBlueBtn(binding.cashBtn, binding.tvCash, binding.ivIconCash)
+            setWhiteBtn(binding.cardBtn, binding.tvCard, binding.ivIconCard)
+            setWhiteBtn(binding.mixedBtn, binding.tvMixed, binding.ivIconMixed)
         }
 
         binding.cardBtn.setSafeOnClickListener {
             shopInformation.methodPayment = Constants.CARD_PAYMENT_METHOD
             showCardDialog()
+            setWhiteBtn(binding.cashBtn, binding.tvCash, binding.ivIconCash)
+            setBlueBtn(binding.cardBtn, binding.tvCard, binding.ivIconCard)
+            setWhiteBtn(binding.mixedBtn, binding.tvMixed, binding.ivIconMixed)
         }
 
         binding.mixedBtn.setSafeOnClickListener {
             shopInformation.methodPayment = Constants.MIXED_PAYMENT_METHOD
             goToMixedFragment()
+            setWhiteBtn(binding.cashBtn, binding.tvCash, binding.ivIconCash)
+            setWhiteBtn(binding.cardBtn, binding.tvCard, binding.ivIconCard)
+            setBlueBtn(binding.mixedBtn, binding.tvMixed, binding.ivIconMixed)
         }
     }
 
@@ -169,11 +182,26 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
         isSuccessCard = true
     }
 
-    private fun setBlueBtn(viewBinding: Int){
-
+    private fun setBlueBtn(
+        viewConstraint: ConstraintLayout,
+        textView: TextView,
+        iconView: ImageView
+    ) {
+        viewConstraint.setBackgroundResource(R.drawable.blue_box)
+        textView.setTextColor(requireContext().getColor(R.color.white))
+        iconView.imageTintList =
+            ContextCompat.getColorStateList(requireContext(), R.color.white)
     }
 
-    private fun setWhiteBtn(viewBinding: Int){
+    private fun setWhiteBtn(
+        viewConstraint: ConstraintLayout,
+        textView: TextView,
+        iconView: ImageView
+    ) {
+        viewConstraint.setBackgroundResource(R.drawable.box_gray_payment)
+        textView.setTextColor(requireContext().getColor(R.color.black))
+        iconView.imageTintList =
+            ContextCompat.getColorStateList(requireContext(), R.color.black)
 
     }
 
