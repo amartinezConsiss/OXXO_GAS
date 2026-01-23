@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.oxxogas.R
 import com.example.oxxogas.databinding.ItemPaymentsMadeBinding
 import com.example.oxxogas.domain.models.PaymentsMadeList
 import com.example.oxxogas.ui.main.utils.Constants
@@ -36,14 +37,18 @@ class PaymentsMadeAdapter :
         RecyclerView.ViewHolder(viewBinding.root) {
 
         fun bind(paymentMade: PaymentsMadeList) {
+            val context = viewBinding.root.context
             when (paymentMade.typeMethod) {
                 Constants.CARD_PAYMENT_METHOD -> {
-                    viewBinding.typePayment.text = "Pago con tarjeta ${paymentMade.count}:"
+                    viewBinding.typePayment.text = context.getString(
+                        R.string.pay_with_card_amount,
+                        paymentMade.count.toString()
+                    )
                     viewBinding.madeAmount.text = setCurrencyFormat(paymentMade.amount)
                 }
 
                 Constants.CASH_PAYMENT_METHOD -> {
-                    viewBinding.typePayment.text = "Pago en efectivo ${paymentMade.count}:"
+                    viewBinding.typePayment.text = context.getString(R.string.cash_payment_amount)
                     viewBinding.madeAmount.text = setCurrencyFormat(paymentMade.amount)
                 }
             }

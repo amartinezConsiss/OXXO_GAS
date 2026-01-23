@@ -28,4 +28,6 @@
     <color name="spin_color">#00B7C6</color>
     <color name="gray_eb">#EBECEC</color>
     <color name="green_check">#008919</color>
+    <color name="orange_50">#FFD3A1</color>
+    <color name="blue_edit_cash">#BEE8FF</color>
 </resources>

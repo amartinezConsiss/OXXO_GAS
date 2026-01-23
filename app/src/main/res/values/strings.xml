@@ -60,6 +60,7 @@
     <string name="outstanding_payment_amount">Pendiente por pagar %s</string>
     <string name="total_amount">Total a pagar</string>
     <string name="cash_payment">Pago en efectivo</string>
+    <string name="cash_payment_amount">Pago en efectivo:</string>
     <string name="cash_receipt">Recibo en efectivo</string>
     <string name="email_resume">Correo</string>
     <string name="for_email">Por correo</string>
@@ -72,6 +73,7 @@
     <string name="card_method">Pago Tarjeta</string>
     <string name="negative_number">- %s</string>
     <string name="pay_with_card">Pago con tarjeta</string>
+    <string name="pay_with_card_amount">Pago con tarjeta: %s</string>
     <string name="generate_digital_ticket">Generando ticket digital...</string>
     <string name="amount_receipt_error">El monto no puede ser mayor a %s</string>
     <string name="digital_ticket">Ticket Digital</string>
@@ -122,4 +124,9 @@
     <string name="mixed_total_title">Total:</string>
     <string name="exchange_total_title">Cambio: %s</string>
     <string name="first_card_payment">Primer pago con tarjeta</string>
+    <string name="cash_edited_success">Registro de efectivo modificado</string>
+    <string name="send_email">Enviar</string>
+    <string name="next_payment">Siguiente pago a realizar</string>
+    <string name="modify_cash_payment">Modificar pago en efectivo</string>
+    <string name="edit">Editar</string>
 </resources>

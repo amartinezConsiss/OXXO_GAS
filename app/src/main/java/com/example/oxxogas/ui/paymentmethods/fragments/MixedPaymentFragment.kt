@@ -37,6 +37,7 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
     private lateinit var backCallback: OnBackPressedCallback
     private lateinit var shopInformationResponse: ShopInformation
     private val adapter by lazy { PaymentsMadeAdapter() }
+    private val total by lazy { shopInformationResponse.total }
     private var parentActivity: HomeActivity? = null
     private var subtotal = BigDecimal.ZERO
     private var totalCards = 1
@@ -55,8 +56,8 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
     }
 
     private fun initView() {
-        subtotal = shopInformationResponse.total?.toBigDecimal()
-        binding.tvTotal.text = setCurrencyFormat(shopInformationResponse.total ?: 0.0)
+        subtotal = total?.toBigDecimal()
+        binding.tvTotal.text = setCurrencyFormat(total ?: 0.0)
         binding.tvOutstandingAmount.text = setCurrencyFormat(subtotal)
         binding.rvPaymentMade.adapter = adapter
         binding.rvPaymentMade.isNestedScrollingEnabled = false
@@ -66,6 +67,9 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
             setWhiteBtn(binding.btnCash, binding.tvCash, binding.ivIconCash)
             paymentSelected = Constants.CARD_PAYMENT_METHOD
             binding.tvExchange.visibility = View.GONE
+            binding.checkOutContainer.setBackgroundResource(R.drawable.box_white)
+            binding.tvPaymentLabel.text = getString(R.string.next_payment)
+            binding.etEnterAmount.setText(setCurrencyFormat(subtotal))
             enabledButtonContinue(
                 cleanCurrencyDoubleFormat(binding.etEnterAmount.text.toString()) in 1.00..subtotal.toDouble()
             )
@@ -78,8 +82,12 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
             binding.tvExchange.visibility = View.VISIBLE
             validateExchangeAndPendingAmount(binding.etEnterAmount.text.toString())
             enabledButtonContinue(
-                cleanCurrencyDoubleFormat(binding.etEnterAmount.text.toString()) > subtotal.toDouble()
+                cleanCurrencyDoubleFormat(binding.etEnterAmount.text.toString()) >= 1.00
             )
+            if (existsCashPaymentMade()) {
+                updateCashComponent()
+                binding.etEnterAmount.setText(setCurrencyFormat(getFinalCashAmount()))
+            }
         }
     }
 
@@ -91,7 +99,7 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
             val amountCash = cleanCurrencyDoubleFormat(cash)
             if (paymentSelected == Constants.CASH_PAYMENT_METHOD) {
                 validateExchangeAndPendingAmount(cash)
-                enabledButtonContinue(amountCash > subtotal.toDouble())
+                enabledButtonContinue(amountCash >= 1.00)
             } else {
                 enabledButtonContinue(amountCash in 1.00..subtotal.toDouble())
             }
@@ -117,8 +125,10 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
             updateOutstandingAmount(cleanCurrencyFormat(binding.etEnterAmount.text.toString()))
             if (isFirstPayment) {
                 binding.btnPaymentsContainer.visibility = View.VISIBLE
-                binding.tvPaymentLabel.text = "Siguiente pago a realizar"
+                binding.tvPaymentLabel.text = getString(R.string.next_payment)
                 isFirstPayment = false
+                paymentSelected = 0
+                enabledButtonContinue(false)
             }
         }
         cardDialog.onPayCardFailCallback = {
@@ -135,8 +145,7 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
             )
             delay(2500)
             parentActivity?.dismissProgressBottomDialog()
-            addPaymentMade()
-            updateOutstandingAmount(cleanCurrencyFormat(binding.etEnterAmount.text.toString()))
+            updateCashAmount()
             totalCash += 1
         }
     }
@@ -155,14 +164,25 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
             )
         )
         adapter.setPaymentMade(paymentsMade)
+        cleanBtn()
+    }
+
+    private fun cleanBtn() {
+        paymentSelected = 0
+        enabledButtonContinue(false)
+        binding.checkOutContainer.setBackgroundResource(R.drawable.box_white)
+        binding.tvPaymentLabel.text = getString(R.string.next_payment)
+        binding.tvExchange.visibility = View.GONE
+        setWhiteBtn(binding.btnCard, binding.tvCard, binding.ivIconCard)
+        setWhiteBtn(binding.btnCash, binding.tvCash, binding.ivIconCash)
     }
 
     private fun enabledButtonContinue(validAmount: Boolean) {
-        if (validAmount) {
+        if (validAmount && paymentSelected != 0) {
             binding.btnProccessCard.isEnabled = true
             binding.btnProccessCard.setBackgroundResource(R.drawable.dark_green_btn)
         } else {
-            binding.btnProccessCard.isEnabled = true
+            binding.btnProccessCard.isEnabled = false
             binding.btnProccessCard.setBackgroundResource(R.drawable.gray_btn)
         }
     }
@@ -196,18 +216,47 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
             setMixedInformation()
             goToResumeFragment()
         } else {
-            subtotal -= amountPayment
+            subtotal = calculateOutstandingAmount()
             binding.tvOutstandingAmount.text = setCurrencyFormat(subtotal)
             binding.etEnterAmount.setText(setCurrencyFormat(subtotal))
-            if (subtotal == BigDecimal.ZERO) {
+            if (subtotal.toDouble() == 0.00) {
                 setMixedInformation()
                 goToResumeFragment()
             }
         }
-
     }
 
+    private fun calculateOutstandingAmount(): BigDecimal {
+        var sumAmount = BigDecimal.ZERO
+        val total = total?.toBigDecimal()
+        paymentsMade.forEach { paymentMade ->
+            sumAmount += paymentMade.amount
+        }
+        return if (total != null) {
+            (total - sumAmount)
+        } else {
+            BigDecimal.ZERO
+        }
+    }
+
+    private fun calculateOnlyCardsPaymentOutstanding(): BigDecimal {
+        var sumAmount = BigDecimal.ZERO
+        val total = total?.toBigDecimal()
+        paymentsMade.forEach { paymentMade ->
+            if (paymentMade.typeMethod == Constants.CARD_PAYMENT_METHOD) {
+                sumAmount += paymentMade.amount
+            }
+        }
+        return if (total != null) {
+            total - sumAmount
+        } else {
+            BigDecimal.ZERO
+        }
+    }
+
+
     private fun disabledToolbar() {
+        binding.ivBack.setImageResource(R.drawable.back_disabled)
         parentActivity = activity as? HomeActivity
 
         backCallback = object : OnBackPressedCallback(true) {
@@ -234,7 +283,7 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
         }
 
         shopInformationResponse.cardsMixedInformation = cardsUsed
-        shopInformationResponse.cashAmount = shopInformationResponse.total?.minus(amountTotalCard)
+        shopInformationResponse.cashAmount = total?.minus(amountTotalCard)
     }
 
     private fun getShopInformation() {
@@ -253,8 +302,9 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
 
     private fun validateExchangeAndPendingAmount(amount: String) {
         val amountCash = cleanCurrencyDoubleFormat(amount)
-        if (amountCash > subtotal.toDouble()) {
-            val exchange = amountCash - subtotal.toDouble()
+        val subTotalOnlyCard = calculateOnlyCardsPaymentOutstanding().toDouble()
+        if (amountCash > subTotalOnlyCard) {
+            val exchange = amountCash - subTotalOnlyCard
             binding.tvExchange.text =
                 getString(R.string.exchange_total_title, setCurrencyFormat(exchange))
         } else {
@@ -263,9 +313,67 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
         }
     }
 
+    private fun updateCashAmount() {
+        if (existsCashPaymentMade()) {
+            paymentsMade
+                .firstOrNull { it.typeMethod == 2 }
+                ?.let { payment ->
+                    payment.amount = cleanCurrencyFormat(binding.etEnterAmount.text.toString())
+                }
+            adapter.setPaymentMade(paymentsMade)
+            subtotal =
+                total?.toBigDecimal()?.minus(
+                    getCardTotalAmount()
+                ) ?: BigDecimal.ZERO
+            updateCashComponent()
+            cleanBtn()
+            parentActivity?.showSuccessBottomDialog(
+                R.drawable.icon_cash,
+                R.string.cash_payment,
+                R.string.cash_edited_success
+            )
+            lifecycleScope.launch {
+                delay(2500)
+                parentActivity?.dismissSucessBottomDialog()
+                updateOutstandingAmount(cleanCurrencyFormat(binding.etEnterAmount.text.toString()))
+            }
+        } else {
+            addPaymentMade()
+            updateOutstandingAmount(cleanCurrencyFormat(binding.etEnterAmount.text.toString()))
+        }
+    }
+
+    private fun existsCashPaymentMade() = paymentsMade.any { it.typeMethod == 2 }
+
+    private fun updateCashComponent() {
+        binding.checkOutContainer.setBackgroundResource(R.drawable.box_blue_light)
+        binding.tvPaymentLabel.text = getString(R.string.modify_cash_payment)
+        binding.tvCash.text = getString(R.string.edit)
+    }
+
+    private fun getFinalCashAmount(): BigDecimal {
+        val paymentsMade = paymentsMade
+            .firstOrNull { it.typeMethod == 2 }
+        return paymentsMade?.amount ?: BigDecimal.ZERO
+    }
+
+    private fun getCardTotalAmount(): BigDecimal {
+        var sumCard = BigDecimal.ZERO
+        paymentsMade.forEach {
+            if (it.typeMethod == Constants.CARD_PAYMENT_METHOD)
+                sumCard += it.amount
+        }
+
+        return sumCard
+    }
+
     private fun goToResumeFragment() {
         Bundle().apply {
             putString(Constants.SHOP_INFORMATION, getShopInformationGson())
+            putString(
+                Constants.SHOP_INFORMATION_MIXED_HISTORY,
+                getShopInformationMixedHistoryGson()
+            )
             findNavController().navigate(
                 R.id.action_mixed_resume_ticket_fragment,
                 this
@@ -276,5 +384,10 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
     private fun getShopInformationGson(): String =
         Gson().toJson(
             shopInformationResponse
+        )
+
+    private fun getShopInformationMixedHistoryGson(): String =
+        Gson().toJson(
+            paymentsMade
         )
 }

@@ -19,6 +19,7 @@ object Constants {
     const val TOTAL_AMOUNT = "total_amount_key"
     const val SHOP_INFORMATION= "shop_information"
     const val HAS_SPIN_PREMIA= "has_spin_premia"
+    const val SHOP_INFORMATION_MIXED_HISTORY= "shop_information_mixed_history"
 
     const val CARD_PAYMENT_METHOD = 1
     const val CASH_PAYMENT_METHOD = 2

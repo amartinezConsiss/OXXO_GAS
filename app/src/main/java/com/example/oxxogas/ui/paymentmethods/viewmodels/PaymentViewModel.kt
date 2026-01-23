@@ -14,8 +14,11 @@ class PaymentViewModel @Inject constructor() : ViewModel() {
 
     private val _productState = MutableLiveData<ProductUiState>()
     val productState: LiveData<ProductUiState> = _productState
+    private var isDataLoaded = false
+
 
     fun loadDummyInfo() {
+        if (isDataLoaded) return
         val productNumber = (1..3).random()
         val quantityNumber = 1.00 + (50.00 - 1.00) * Random.nextDouble()
 
@@ -38,5 +41,6 @@ class PaymentViewModel @Inject constructor() : ViewModel() {
             quantity = quantity,
             total = total
         )
+        isDataLoaded = true
     }
 }

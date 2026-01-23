@@ -15,6 +15,7 @@ import com.example.oxxogas.domain.models.CardInformation
 import com.example.oxxogas.domain.models.ResumeTicketData
 import com.example.oxxogas.domain.models.ShopInformation
 import com.example.oxxogas.databinding.FragmentResumeTicketBinding
+import com.example.oxxogas.domain.models.PaymentsMadeList
 import com.example.oxxogas.domain.models.response.BaseResponse
 import com.example.oxxogas.ui.home.activities.HomeActivity
 import com.example.oxxogas.ui.main.fragments.BaseFragment
@@ -27,14 +28,15 @@ import com.example.oxxogas.ui.main.utils.buildZplMixedTicket
 import com.example.oxxogas.ui.main.utils.generateQr
 import com.example.oxxogas.ui.main.utils.setCurrencyFormat
 import com.example.oxxogas.ui.main.utils.setSafeOnClickListener
+import com.example.oxxogas.ui.paymentmethods.adapters.PaymentsMadeAdapter
 import com.example.oxxogas.ui.resumeticket.adapter.MixedCardResumeAdapter
 import com.example.oxxogas.ui.resumeticket.dialogs.SendEmailBottomSheetDialog
 import com.example.oxxogas.ui.resumeticket.interfaces.PrinterCallback
 import com.example.oxxogas.ui.resumeticket.utils.DummyData
 import com.example.oxxogas.ui.resumeticket.viewmodels.ResumeViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -47,6 +49,7 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
 
     private lateinit var sendEmailBottomSheetDialog: SendEmailBottomSheetDialog
     private lateinit var shopInformationResponse: ShopInformation
+    private lateinit var mixedInformation: MutableList<PaymentsMadeList>
     private var parentActivity: HomeActivity? = null
     private val ticketBinding by lazy {
         binding.ticketContainer
@@ -101,14 +104,36 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
                 e.printStackTrace()
             }
         }
+
+        if (arguments?.containsKey(Constants.SHOP_INFORMATION_MIXED_HISTORY) == true) {
+            val type = object : TypeToken<MutableList<PaymentsMadeList>>() {}.type
+            val shopMixedInformation =
+                arguments?.getString(Constants.SHOP_INFORMATION_MIXED_HISTORY)
+
+            val gson = Gson()
+            try {
+                mixedInformation =
+                    gson.fromJson(shopMixedInformation, type)
+            } catch (e: JsonSyntaxException) {
+                e.printStackTrace()
+            }
+        }
     }
 
     private fun loadingTicket() {
         val itemGenerateTicket = binding.generetingTicket
+        val adapter = PaymentsMadeAdapter()
         lifecycleScope.launch {
             itemGenerateTicket.tvPaymentMade.text =
                 setCurrencyFormat(shopInformationResponse.total ?: 0.0)
-            delay(2500)
+            if (shopInformationResponse.methodPayment == Constants.MIXED_PAYMENT_METHOD) {
+                itemGenerateTicket.rvPaymentMade.adapter = adapter
+                adapter.setPaymentMade(mixedInformation)
+            } else {
+                itemGenerateTicket.mixedResumeContainer.visibility = View.GONE
+            }
+
+            delay(3000)
             fadeOutLoaderAndShowTicket()
         }
     }
