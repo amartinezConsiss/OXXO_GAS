@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.oxxogas.R
@@ -25,23 +27,26 @@ import com.example.oxxogas.ui.main.utils.setCurrencyFormat
 import com.example.oxxogas.ui.main.utils.setSafeOnClickListener
 import com.example.oxxogas.ui.paymentmethods.adapters.PaymentsMadeAdapter
 import com.example.oxxogas.ui.paymentmethods.dialogs.CardPaymentBottomSheetDialog
+import com.example.oxxogas.ui.paymentmethods.viewmodels.MixedPaymentViewModel
 import com.example.oxxogas.ui.resumeticket.utils.DummyData
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
+@AndroidEntryPoint
 class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
 
     private lateinit var backCallback: OnBackPressedCallback
+    private val viewModel by viewModels<MixedPaymentViewModel>()
     private lateinit var shopInformationResponse: ShopInformation
     private val adapter by lazy { PaymentsMadeAdapter() }
     private val total by lazy { shopInformationResponse.total }
     private var parentActivity: HomeActivity? = null
     private var subtotal = BigDecimal.ZERO
     private var totalCards = 1
-    private var totalCash = 1
     private var paymentsMade = mutableListOf<PaymentsMadeList>()
     private var isFirstPayment = true
     private var paymentSelected = Constants.CARD_PAYMENT_METHOD
@@ -53,6 +58,7 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
         getShopInformation()
         initView()
         initCardFlow()
+        viewModel.initData(total, paymentsMade)
     }
 
     private fun initView() {
@@ -86,7 +92,7 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
             )
             if (existsCashPaymentMade()) {
                 updateCashComponent()
-                binding.etEnterAmount.setText(setCurrencyFormat(getFinalCashAmount()))
+                binding.etEnterAmount.setText(setCurrencyFormat(viewModel.finalCashAmount()))
             }
         }
     }
@@ -146,16 +152,16 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
             delay(2500)
             parentActivity?.dismissProgressBottomDialog()
             updateCashAmount()
-            totalCash += 1
         }
     }
 
     private fun addPaymentMade() {
         val totalPaymentMethodsUsed = if (paymentSelected == Constants.CASH_PAYMENT_METHOD) {
-            totalCash
+            1
         } else {
             totalCards
         }
+
         paymentsMade.add(
             PaymentsMadeList(
                 paymentSelected,
@@ -163,6 +169,7 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
                 totalPaymentMethodsUsed
             )
         )
+        viewModel.updatePayments(paymentsMade)
         adapter.setPaymentMade(paymentsMade)
         cleanBtn()
     }
@@ -216,7 +223,7 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
             setMixedInformation()
             goToResumeFragment()
         } else {
-            subtotal = calculateOutstandingAmount()
+            subtotal = viewModel.outstandingAmount()
             binding.tvOutstandingAmount.text = setCurrencyFormat(subtotal)
             binding.etEnterAmount.setText(setCurrencyFormat(subtotal))
             if (subtotal.toDouble() == 0.00) {
@@ -225,35 +232,6 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
             }
         }
     }
-
-    private fun calculateOutstandingAmount(): BigDecimal {
-        var sumAmount = BigDecimal.ZERO
-        val total = total?.toBigDecimal()
-        paymentsMade.forEach { paymentMade ->
-            sumAmount += paymentMade.amount
-        }
-        return if (total != null) {
-            (total - sumAmount)
-        } else {
-            BigDecimal.ZERO
-        }
-    }
-
-    private fun calculateOnlyCardsPaymentOutstanding(): BigDecimal {
-        var sumAmount = BigDecimal.ZERO
-        val total = total?.toBigDecimal()
-        paymentsMade.forEach { paymentMade ->
-            if (paymentMade.typeMethod == Constants.CARD_PAYMENT_METHOD) {
-                sumAmount += paymentMade.amount
-            }
-        }
-        return if (total != null) {
-            total - sumAmount
-        } else {
-            BigDecimal.ZERO
-        }
-    }
-
 
     private fun disabledToolbar() {
         binding.ivBack.setImageResource(R.drawable.back_disabled)
@@ -302,7 +280,7 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
 
     private fun validateExchangeAndPendingAmount(amount: String) {
         val amountCash = cleanCurrencyDoubleFormat(amount)
-        val subTotalOnlyCard = calculateOnlyCardsPaymentOutstanding().toDouble()
+        val subTotalOnlyCard = viewModel.onlyCardsOutstanding()
         if (amountCash > subTotalOnlyCard) {
             val exchange = amountCash - subTotalOnlyCard
             binding.tvExchange.text =
@@ -320,6 +298,7 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
                 ?.let { payment ->
                     payment.amount = cleanCurrencyFormat(binding.etEnterAmount.text.toString())
                 }
+            viewModel.updatePayments(paymentsMade)
             adapter.setPaymentMade(paymentsMade)
             subtotal =
                 total?.toBigDecimal()?.minus(
@@ -349,12 +328,6 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
         binding.checkOutContainer.setBackgroundResource(R.drawable.box_blue_light)
         binding.tvPaymentLabel.text = getString(R.string.modify_cash_payment)
         binding.tvCash.text = getString(R.string.edit)
-    }
-
-    private fun getFinalCashAmount(): BigDecimal {
-        val paymentsMade = paymentsMade
-            .firstOrNull { it.typeMethod == 2 }
-        return paymentsMade?.amount ?: BigDecimal.ZERO
     }
 
     private fun getCardTotalAmount(): BigDecimal {

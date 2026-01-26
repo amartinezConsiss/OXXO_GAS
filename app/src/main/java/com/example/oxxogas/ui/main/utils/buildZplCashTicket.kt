@@ -8,7 +8,7 @@ fun buildZplCashTicket(
     return """
         ^XA
         ^PW576
-        ^LL1450
+        ^LL1470
         ^LH0,0
 
         ^FO110,20

@@ -10,7 +10,7 @@ fun buildZplCardTicket(
     return """
         ^XA
         ^PW576
-        ^LL1730
+        ^LL1750
         ^LH0,0
 
         ^FO110,20

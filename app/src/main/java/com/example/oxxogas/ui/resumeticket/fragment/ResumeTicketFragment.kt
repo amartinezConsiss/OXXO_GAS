@@ -363,6 +363,10 @@ class ResumeTicketFragment : BaseFragment<FragmentResumeTicketBinding>() {
                                     R.string.ticket_printing,
                                     R.string.ticket_printing_success
                                 )
+                                lifecycleScope.launch {
+                                    delay(2500)
+                                    parentActivity?.dismissSucessBottomDialog()
+                                }
                             }
                         }
 

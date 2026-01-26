@@ -7,7 +7,7 @@ fun buildZplCardSpinPremiaTicket(resumeTicketData: ResumeTicketData): String {
     return """
         ^XA
         ^PW576
-        ^LL1800
+        ^LL1820
         ^LH0,0
 
         ^FO110,20
