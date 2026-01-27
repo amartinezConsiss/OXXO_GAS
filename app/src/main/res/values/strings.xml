@@ -73,7 +73,7 @@
     <string name="card_method">Pago Tarjeta</string>
     <string name="negative_number">- %s</string>
     <string name="pay_with_card">Pago con tarjeta</string>
-    <string name="pay_with_card_amount">Pago con tarjeta: %s</string>
+    <string name="pay_with_card_amount">Pago con tarjeta %s :</string>
     <string name="generate_digital_ticket">Generando ticket digital...</string>
     <string name="amount_receipt_error">El monto no puede ser mayor a %s</string>
     <string name="digital_ticket">Ticket Digital</string>
