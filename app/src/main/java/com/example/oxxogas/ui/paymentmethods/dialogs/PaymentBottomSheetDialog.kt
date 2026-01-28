@@ -115,10 +115,10 @@ class PaymentBottomSheetDialog(private val totalAmount: Double, private val meth
     private fun enabledButtonContinue(validAmount: Boolean) {
         if (validAmount) {
             binding.btnApplyAmount.isEnabled = true
-            binding.btnApplyAmount.setBackgroundResource(R.drawable.dark_green_btn)
+            binding.btnApplyAmount.setBackgroundResource(R.drawable.btn_dark_green)
         } else {
             binding.btnApplyAmount.isEnabled = false
-            binding.btnApplyAmount.setBackgroundResource(R.drawable.gray_btn)
+            binding.btnApplyAmount.setBackgroundResource(R.drawable.btn_gray)
         }
     }
 }

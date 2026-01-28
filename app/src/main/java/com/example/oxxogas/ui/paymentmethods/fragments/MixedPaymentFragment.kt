@@ -8,7 +8,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.oxxogas.R
@@ -192,10 +191,10 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
     private fun enabledButtonContinue(validAmount: Boolean) {
         if (validAmount && paymentSelected != 0) {
             binding.btnProccessCard.isEnabled = true
-            binding.btnProccessCard.setBackgroundResource(R.drawable.dark_green_btn)
+            binding.btnProccessCard.setBackgroundResource(R.drawable.btn_dark_green)
         } else {
             binding.btnProccessCard.isEnabled = false
-            binding.btnProccessCard.setBackgroundResource(R.drawable.gray_btn)
+            binding.btnProccessCard.setBackgroundResource(R.drawable.btn_gray)
         }
     }
 
@@ -204,7 +203,7 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
         textView: TextView,
         iconView: ImageView
     ) {
-        viewConstraint.setBackgroundResource(R.drawable.blue_box)
+        viewConstraint.setBackgroundResource(R.drawable.box_blue)
         textView.setTextColor(requireContext().getColor(R.color.white))
         iconView.imageTintList =
             ContextCompat.getColorStateList(requireContext(), R.color.white)

@@ -39,10 +39,10 @@ class SendEmailBottomSheetDialog : BaseBottomSheetDialog<BottomDialogSendEmailBi
         binding.etEnterEmail.afterTextChanged { email ->
             if (isValidEmail(email)) {
                 binding.btnSendEmail.isEnabled = true
-                binding.btnSendEmail.setBackgroundResource(R.drawable.blue_btn)
+                binding.btnSendEmail.setBackgroundResource(R.drawable.btn_blue)
             } else {
                 binding.btnSendEmail.isEnabled = true
-                binding.btnSendEmail.setBackgroundResource(R.drawable.gray_btn)
+                binding.btnSendEmail.setBackgroundResource(R.drawable.btn_gray)
             }
         }
     }

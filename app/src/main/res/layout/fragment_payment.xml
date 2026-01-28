@@ -178,7 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/blue_box"
+                android:background="@drawable/box_blue"
                 app:layout_constraintTop_toBottomOf="@id/cash_btn">
 
                 <ImageView

@@ -87,10 +87,10 @@ class SpinPremiaBottomSheetDialog : BaseBottomSheetDialog<DialogSpinPremiaBindin
 
     private fun statusBtnContinue(validPhone: Boolean) {
         if (validPhone) {
-            binding.btnContinue.setBackgroundResource(R.drawable.blue_btn)
+            binding.btnContinue.setBackgroundResource(R.drawable.btn_blue)
             binding.btnContinue.isEnabled = true
         } else {
-            binding.btnContinue.setBackgroundResource(R.drawable.gray_btn)
+            binding.btnContinue.setBackgroundResource(R.drawable.btn_gray)
             binding.btnContinue.isEnabled = false
         }
     }

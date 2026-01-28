@@ -200,7 +200,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
         textView: TextView,
         iconView: ImageView
     ) {
-        viewConstraint.setBackgroundResource(R.drawable.blue_box)
+        viewConstraint.setBackgroundResource(R.drawable.box_blue)
         textView.setTextColor(requireContext().getColor(R.color.white))
         iconView.imageTintList =
             ContextCompat.getColorStateList(requireContext(), R.color.white)

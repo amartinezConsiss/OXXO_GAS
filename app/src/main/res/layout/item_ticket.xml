@@ -286,7 +286,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="3"
-            tools:listitem="@layout/item_voucher_linear_card" />
+            tools:listitem="@layout/item_voucher_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
