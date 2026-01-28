@@ -67,7 +67,7 @@ class CashPaymentBottomSheetDialog(private val totalAmount: Double) :
             binding.btnApplyCash.isEnabled = true
             binding.btnApplyCash.setBackgroundResource(R.drawable.dark_green_btn)
         } else {
-            binding.btnApplyCash.isEnabled = true
+            binding.btnApplyCash.isEnabled = false
             binding.btnApplyCash.setBackgroundResource(R.drawable.gray_btn)
         }
     }

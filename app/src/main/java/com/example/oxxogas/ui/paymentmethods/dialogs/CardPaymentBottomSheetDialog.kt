@@ -51,7 +51,7 @@ class CardPaymentBottomSheetDialog(
         }
         binding.tvAmountToPay.text = setCurrencyFormat(totalAmount)
 
-        binding.root.setSafeOnClickListener { button ->
+        binding.ivCardPay.setSafeOnClickListener { button ->
             customResultPaymentView()
             if (isSuccess) {
                 button.isEnabled = false

@@ -95,6 +95,11 @@ class MixedPaymentFragment : BaseFragment<FragmentMixedPaymentBinding>() {
                 binding.etEnterAmount.setText(setCurrencyFormat(viewModel.finalCashAmount()))
             }
         }
+
+        binding.ivBack.setSafeOnClickListener {
+            requireActivity()
+                .onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun initCardFlow() {

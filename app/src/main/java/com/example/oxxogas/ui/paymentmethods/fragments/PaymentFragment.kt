@@ -19,6 +19,7 @@ import com.example.oxxogas.ui.main.utils.setCurrencyFormat
 import com.example.oxxogas.ui.main.utils.setSafeOnClickListener
 import com.example.oxxogas.ui.newsale.dialogs.SpinPremiaBottomSheetDialog
 import com.example.oxxogas.ui.paymentmethods.dialogs.CardPaymentBottomSheetDialog
+import com.example.oxxogas.ui.paymentmethods.dialogs.MixedInformationBottomSheetDialog
 import com.example.oxxogas.ui.paymentmethods.dialogs.PaymentBottomSheetDialog
 import com.example.oxxogas.ui.paymentmethods.viewmodels.PaymentViewModel
 import com.google.gson.Gson
@@ -83,7 +84,7 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
 
         binding.mixedBtn.setSafeOnClickListener {
             shopInformation.methodPayment = Constants.MIXED_PAYMENT_METHOD
-            goToMixedFragment()
+            showMixedDialog()
             setWhiteBtn(binding.cashBtn, binding.tvCash, binding.ivIconCash)
             setWhiteBtn(binding.cardBtn, binding.tvCard, binding.ivIconCard)
             setBlueBtn(binding.mixedBtn, binding.tvMixed, binding.ivIconMixed)
@@ -180,6 +181,18 @@ class PaymentFragment : BaseFragment<FragmentPaymentBinding>() {
         }
         cardDialog.show(parentFragmentManager, Constants.TAG_CASH_BOTTOM_SHEET_DIALOG)
         isSuccessCard = true
+    }
+
+    private fun showMixedDialog() {
+        val mixedDialog =
+            MixedInformationBottomSheetDialog()
+
+        mixedDialog.onContinueMixedCallback = {
+            goToMixedFragment()
+        }
+
+
+        mixedDialog.show(parentFragmentManager, Constants.TAG_CASH_BOTTOM_SHEET_DIALOG)
     }
 
     private fun setBlueBtn(

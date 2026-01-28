@@ -29,7 +29,7 @@
     <string name="phone">Teléfono</string>
     <string name="read_code">Leer código</string>
     <string name="cancel">Cancelar</string>
-    <string name="error_connection">Error de comunicación con Bomba 6, verifique conexión.</string>
+    <string name="error_connection">Error de comunicación, verifique conexión.</string>
     <string name="no">No</string>
     <string name="yes">Sí</string>
     <string name="try_again">Reintentar</string>
@@ -111,7 +111,7 @@
     <string name="mechanic_spin_premia">=== MECANICA Spin Premia ===</string>
     <string name="more_information_spin_premia">Con OXXO GAS y Spin Premia\n <b>Recibes Más</b>\n Consulta los beneficios\n <b>vigentes</b>\n en la App Spin Premia</string>
     <string name="thanks_for_thrust">Gracias por la confianza</string>
-    <string name="cant_price">CANT. %sLTS | 1LT %s</string>
+    <string name="cant_price">CANT. %s LTS | 1 LT %s</string>
     <string name="amount_to_pay">Monto a pagar</string>
     <string name="accept">Aceptar</string>
     <string name="payment_made">Pago realizado</string>

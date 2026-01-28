@@ -117,7 +117,7 @@ class PaymentBottomSheetDialog(private val totalAmount: Double, private val meth
             binding.btnApplyAmount.isEnabled = true
             binding.btnApplyAmount.setBackgroundResource(R.drawable.dark_green_btn)
         } else {
-            binding.btnApplyAmount.isEnabled = true
+            binding.btnApplyAmount.isEnabled = false
             binding.btnApplyAmount.setBackgroundResource(R.drawable.gray_btn)
         }
     }

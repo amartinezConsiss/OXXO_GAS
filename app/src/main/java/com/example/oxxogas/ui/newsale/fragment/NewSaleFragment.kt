@@ -40,7 +40,7 @@ class NewSaleFragment :
                 if (status == 1) {
                     goToPaymentFragment(pompId)
                 } else {
-                    showDisabledPomp(status)
+                    showDisabledPomp(status, pompId)
                 }
 
             }
@@ -48,34 +48,17 @@ class NewSaleFragment :
         binding.rvPetrolPumps.isNestedScrollingEnabled = false
     }
 
-    private fun showDisabledPomp(idStatus: Int) {
+    private fun showDisabledPomp(idStatus: Int, pumpId: Int) {
         when (idStatus) {
             2 -> {
                 showErrorAlert(
                     R.drawable.img_gas_blue,
                     R.string.error,
                     R.drawable.img_bad_alert,
-                    R.string.error
+                    R.string.error_connection
                 )
             }
 
-            3 -> {
-                showErrorAlert(
-                    R.drawable.img_gas_blue,
-                    R.string.closed,
-                    R.drawable.img_gray_close,
-                    R.string.closed
-                )
-            }
-
-            4 -> {
-                showErrorAlert(
-                    R.drawable.img_gas_blue,
-                    R.string.in_use,
-                    R.drawable.img_gas_blue,
-                    R.string.in_use
-                )
-            }
         }
     }
 
